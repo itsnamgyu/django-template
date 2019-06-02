@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+{% load bootstrap4 %}
+
+{% block head %}
+<title>Base Template Preview</title>
+{% endblock head%}
+
+{% block body %}
+<div class="container">
+  <h1 class="mt-5">This is a preview of your base template!</h1>
+  <p><i class="fas fa-rocket"></i> Good luck on your project!</p>
+
+  <h3 class="mt-4">Here are some Bootstrap messages</h2>
+  {% bootstrap_messages %}
+</div>
+{% endblock body %}
+
+{% block body_script %}
+{% endblock body_script %}
