@@ -2,3 +2,4 @@ django
 yapf
 django-dotenv
 django-bootstrap4
+django-allauth

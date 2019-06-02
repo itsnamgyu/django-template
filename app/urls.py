@@ -19,4 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('base.urls')),
+    path('accounts/', include('allauth.urls')),
+    # path('', include('social_django.urls', namespace='social')),  # enable for social login
 ]
