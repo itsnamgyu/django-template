@@ -17,7 +17,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Consider changing <APP> to the name of your project. You MUST apply the
 # same changes in wsgi.py
 DJANGO_ENV = os.environ.get('DJANGO_APP_ENV', default='DEV')
-print(DJANGO_ENV)
 
 if DJANGO_ENV == 'DEV':
     DEBUG = True
