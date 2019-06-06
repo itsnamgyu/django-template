@@ -12,12 +12,10 @@ register = template.Library()
 @register.simple_tag()
 def blurb(identifier):
     # identifier should be in the form of '<page>:<name>'
-    page, name = identifier.split(':')
-
     try:
-        blurb = Blurb.objects.all().get(page=page, name=name)
+        blurb = Blurb.objects.all().get(identifier=identifier)
     except ObjectDoesNotExist:
-        blurb = Blurb.objects.create(page=page, name=name, content=None)
+        blurb = Blurb.objects.create(identifier=identifier, content=None)
 
     empty_message = '[DEBUG] Fill in the blurb "{}" in the admin console'
     if blurb.content == None:

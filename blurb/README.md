@@ -21,11 +21,11 @@ Create and render a template such as the following
 <h1>Intro</h1>
 
 <p>
-  {% blurb 'intro:content' %}
+  {% blurb 'intro/content' %}
 </p>
 ```
 
-Then, a Blurb object will be created with (page=intro, name=content).
+Then, a Blurb object will be created with (identifier='intro/content').
 Go to the admin console and fill out the static text content. Reload your template,
 and the blurb should display the text.
 
