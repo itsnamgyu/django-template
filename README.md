@@ -2,6 +2,22 @@
 
 `django-admin startproject app`, never again.
 
+## Getting Started
+
+### Initialize Virtual Environment Via `venv`
+
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Runserver
+
+```
+python manage.py runserver
+```
+
 ## Environment Variables
 
 ### Deployment Stage
