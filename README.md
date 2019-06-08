@@ -4,6 +4,14 @@
 
 ## Getting Started
 
+### Initialize `.env`
+
+For now, just copy the example file.
+
+```
+cp .env.example .env
+```
+
 ### Initialize Virtual Environment Via `venv`
 
 ```
@@ -22,7 +30,7 @@ python manage.py runserver
 
 ### Deployment Stage
 
-Django only provides the boolean variable `DEBUG` for differentiating deployment stages. In this template, we provide a `DJANGO_ENV` variable in `settings.py`, which is read from your environment variable: `DJANGO_APP_ENV` (default is `'DEV'`). We recommend that you change this name to `DJANGO_<YOURAPP>_ENV` when you are working with multiple Django projects.
+Django only provides the boolean variable `DEBUG` for differentiating deployment stages. In this template, we provide a `DJANGO_ENV` variable in `settings.py`, which is read from your environment variable: `DJANGO_IVR_ENV` (default is `'DEV'`).
 
 Note that you can use any value for `DJANGO_ENV` and it is your choice on how to set the value of `DEBUG` for each value of `DJANGO_ENV`. This is the default.
 
