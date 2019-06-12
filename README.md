@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.6.x or 3.7.x should work without problems. This template is being build mainly on 3.6.5.
+Python 3.6.x or 3.7.x should work without problems. This template is being built mainly on 3.6.5.
 
 ## Getting Started
 
