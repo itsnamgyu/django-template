@@ -1,4 +1,3 @@
-{% load bootstrap4 %}
 {% load static %}
 
 <!-- Uses boilerplate from http://html5boilerplate.com -->
@@ -18,7 +17,8 @@
   {% endblock head%}
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% bootstrap_css %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
   <link rel="stylesheet" href="{% static 'base/global.css' %}">
   <link rel="stylesheet" href="{% static 'base/styles.css' %}">
@@ -35,7 +35,9 @@
   {% block body_script %}
   {% endblock body_script %}
 
-  {% bootstrap_javascript jquery='full' %}
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
 </body>
 
 </html>
