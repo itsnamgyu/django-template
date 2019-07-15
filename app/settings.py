@@ -56,8 +56,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'bootstrap4',
-    'blurb',
     'base',
+    # default feature apps
+    'blurb',
+    # additional feature apps (uncomment to enable)
+    ## 'modern_email',
+    # example app w/ index page for testing
     'example',
 ]
 
@@ -172,4 +176,24 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
+"""
+
+# Uncomment to enable Django SES
+"""
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_SES_REGION_NAME = 'us-west-2'  # default is us-east-1
+AWS_SES_REGION_ENDPOINT = 'email.us-west-2.amazonaws.com'  # default is us-east-1
+"""
+
+# Uncomment to enable modern_email
+"""
+MODERN_EMAIL_STATIC_HOST = 'https://deployment-url.com/'
+MODERN_EMAIL_LOGO_IMAGE = 'img/logo.png'
+MODERN_EMAIL_CUSTOM_TEMPLATE = None
+MODERN_EMAIL_SUPPORT_EMAIL = 'support@deployment-url.com'
+MODERN_EMAIL_ADDRESS_LINE_1 = '1070 E Arques Ave'
+MODERN_EMAIL_ADDRESS_LINE_2 = 'Sunnyvale, CA 94085'
+MODERN_EMAIL_ORGANIZATION_NAME = 'My Company'
 """
