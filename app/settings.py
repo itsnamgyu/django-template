@@ -10,13 +10,14 @@ github.com/itsnamgyu/django-template
 import os
 
 from django.core.exceptions import ImproperlyConfigured
+from app.env_loader import require_env, fetch_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Variable to differentiate between development, staging, production etc.
 # Consider changing <APP> to the name of your project. You MUST apply the
 # same changes in wsgi.py
-DJANGO_ENV = os.environ.get('DJANGO_APP_ENV', default='DEV')
+DJANGO_ENV = fetch_env('DJANGO_APP_ENV', default='DEV')
 
 if DJANGO_ENV == 'DEV':
     DEBUG = True
@@ -26,23 +27,7 @@ else:
     DEBUG = True
     ALLOWED_HOSTS = ['*']
 
-# State the environment variables that must be set in the system or .env file
-REQUIRED_ENVS = [
-    'SECRET_KEY',
-]
-
-# Check for unresolved environment variables
-unresolved_environments = []
-for key in REQUIRED_ENVS:
-    if key not in os.environ:
-        unresolved_environments.append(key)
-if unresolved_environments:
-    message = 'You need to set these environment variables in your system or .env file'
-    for key in unresolved_environments:
-        message += '\n- {}'.format(key)
-    raise ImproperlyConfigured
-
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = require_env('SECRET_KEY')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
