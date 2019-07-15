@@ -42,17 +42,17 @@ modern_email.send_mail(
     **kwargs)
 ```
 
-- subject: A string.
-- message: A string. This will be inserted in the template by default.
-- from_email: A string.
-- recipient_list: A list of strings, each an email address. Each member of recipient_list will see the other recipients in the “To:” field of the email message.
-- html*message: An html string. If specified, this will be inserted in the template instead of `message`. Unlike Django's `send mail`, omitting this field will still result in a multipart/alternative email with `message` as the text/plain content type and the \_templated* `message` as the text/html content type.
+- `subject`: A string.
+- `message`: A string. This will be inserted in the template by default.
+- `from_email`: A string.
+- `recipient_list`: A list of strings, each an email address. Each member of recipient_list will see the other recipients in the “To:” field of the email message.
+- `html_message`: An html string. If specified, this will be inserted in the template instead of `message`. Unlike Django's `send mail`, omitting this field will still result in a multipart/alternative email with `message` as the text/plain content type and the \_templated* `message` as the text/html content type.
 
-#### kwargs
+#### \*\*kwargs
 
 These are keyword arguments to Django's [`send_mail`](https://docs.djangoproject.com/en/2.2/topics/email/#send-mail) function, that are not handled by the app.
 
-- fail_silently: A boolean. When it’s False, send_mail() will raise an smtplib.SMTPException if an error occurs. See the smtplib docs for a list of possible exceptions, all of which are subclasses of SMTPException.
-- auth_user: The optional username to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_USER setting.
-- auth_password: The optional password to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_PASSWORD setting.
-- connection: The optional email backend to use to send the mail. If unspecified, an instance of the default backend will be used. See the documentation on Email backends for more details.
+- `fail_silently`: A boolean. When it’s False, send_mail() will raise an smtplib.SMTPException if an error occurs. See the smtplib docs for a list of possible exceptions, all of which are subclasses of SMTPException.
+- `auth_user`: The optional username to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_USER setting.
+- `auth_password`: The optional password to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_PASSWORD setting.
+- `connection`: The optional email backend to use to send the mail. If unspecified, an instance of the default backend will be used. See the documentation on Email backends for more details.
