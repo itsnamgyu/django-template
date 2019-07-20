@@ -164,6 +164,7 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 """
 
 # Uncomment to enable Django SES
+# Note that Django SES requires the pip package `django-ses`
 """
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_ACCESS_KEY_ID = ''
@@ -181,4 +182,5 @@ MODERN_EMAIL_SUPPORT_EMAIL = 'support@deployment-url.com'
 MODERN_EMAIL_ADDRESS_LINE_1 = '1070 E Arques Ave'
 MODERN_EMAIL_ADDRESS_LINE_2 = 'Sunnyvale, CA 94085'
 MODERN_EMAIL_ORGANIZATION_NAME = 'My Company'
+MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
 """

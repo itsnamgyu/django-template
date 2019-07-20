@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('example.urls')),
     path('accounts/', include('allauth.urls')),
     # path('', include('social_django.urls', namespace='social')),  # enable for social login
+    # path('modern-email/', include('modern_email.urls')),  # enable for modern_email
 ]
