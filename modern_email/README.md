@@ -17,6 +17,7 @@ MODERN_EMAIL_SUPPORT_EMAIL = 'support@deploymenturl.com'
 MODERN_EMAIL_ADDRESS_LINE_1 = '1070 E Arques Ave'
 MODERN_EMAIL_ADDRESS_LINE_2 = 'Sunnyvale, CA 94085'
 MODERN_EMAIL_ORGANIZATION_NAME = 'My Company'
+MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
 ```
 
 - `MODERN_EMAIL_LOGO_IMAGE`: your logo image file. The same string that you would use in `{% static 'here' %}`.

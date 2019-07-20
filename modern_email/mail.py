@@ -1,3 +1,5 @@
+import datetime
+
 from django.core import mail
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -12,6 +14,19 @@ def get_context():
     context['address_line_1'] = settings.ADDRESS_LINE_1
     context['address_line_2'] = settings.ADDRESS_LINE_2
     context['support_email'] = settings.SUPPORT_EMAIL
+
+    end = str(datetime.datetime.now().year)
+    if settings.COPYRIGHT_START_YEAR:
+        start = str(settings.COPYRIGHT_START_YEAR)
+    else:
+        start = end
+
+    if start == end:
+        year_range = start
+    else:
+        year_range = '{} - {}'.format(start, end)
+    context['copyright_year_range'] = year_range
+
     return context
 
 

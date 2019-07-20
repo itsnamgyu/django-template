@@ -24,3 +24,5 @@ ORGANIZATION_NAME = getattr(settings, 'MODERN_EMAIL_ORGANIZATION_NAME', None)
 ADDRESS_LINE_1 = getattr(settings, 'MODERN_EMAIL_ADDRESS_LINE_1', None)
 ADDRESS_LINE_2 = getattr(settings, 'MODERN_EMAIL_ADDRESS_LINE_2', None)
 SUPPORT_EMAIL = getattr(settings, 'MODERN_EMAIL_SUPPORT_EMAIL', None)
+COPYRIGHT_START_YEAR = getattr(settings, 'MODERN_EMAIL_COPYRIGHT_START_YEAR',
+                               None)
