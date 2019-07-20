@@ -25,6 +25,10 @@ MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
 - `MODERN_EMAIL_CUSTOM_TEMPLATE`: you can override the default template by providing your own template file. The same string that you would use in `return render('here.html')`. Not yet supported.
 - `MODERN_EMAIL_LOGO_MAX_LENGTH`: the max width and max height of your logo displayed in the email, in pixels. Default value is 100.
 
+### Requirements
+
+- [`django-boostrap4`](https://readthedocs.org/projects/django-bootstrap4/)
+
 ## Send Mail!
 
 ### `modern_email.send_mail`
@@ -57,3 +61,7 @@ These are keyword arguments to Django's [`send_mail`](https://docs.djangoproject
 - auth_user: The optional username to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_USER setting.
 - auth_password: The optional password to use to authenticate to the SMTP server. If this isn’t provided, Django will use the value of the EMAIL_HOST_PASSWORD setting.
 - connection: The optional email backend to use to send the mail. If unspecified, an instance of the default backend will be used. See the documentation on Email backends for more details.
+
+## Manual Testing
+
+Go to `modern_email:test` (`/modern-email/test`) as a superuser to send a test email.
