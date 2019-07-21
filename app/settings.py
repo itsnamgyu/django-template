@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'blurb',
     # additional feature apps (uncomment to enable)
     ## 'modern_email',
+    ## 'django_stripe',
     # example app w/ index page for testing
     'example',
 ]
@@ -183,4 +184,15 @@ MODERN_EMAIL_ADDRESS_LINE_1 = '1070 E Arques Ave'
 MODERN_EMAIL_ADDRESS_LINE_2 = 'Sunnyvale, CA 94085'
 MODERN_EMAIL_ORGANIZATION_NAME = 'My Company'
 MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
+"""
+
+# Uncomment to enable django_strip
+"""
+STRIPE_TEST_PUBLIC_KEY = require_env('STRIPE_TEST_PUBLIC_KEY')
+STRIPE_TEST_SECRET_KEY = require_env('STRIPE_TEST_SECRET_KEY')
+STRIPE_LIVE_PUBLIC_KEY = require_env('STRIPE_LIVE_PUBLIC_KEY')
+STRIPE_LIVE_SECRET_KEY = require_env('STRIPE_LIVE_SECRET_KEY')
+STRIPE_TEST_WEBHOOK_SIGNING_SECRET = require_env('STRIPE_TEST_WEBHOOK_SIGNING_SECRET')
+STRIPE_LIVE_WEBHOOK_SIGNING_SECRET = require_env('STRIPE_LIVE_WEBHOOK_SIGNING_SECRET')
+STRIPE_SUPPORT_EMAIL = 'support@mysite.com'
 """
