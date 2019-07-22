@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # additional feature apps (uncomment to enable)
     ## 'modern_email',
     ## 'django_stripe',
+    'django_stripe',
     # example app w/ index page for testing
     'example',
 ]
@@ -193,3 +194,8 @@ STRIPE_SECRET_KEY = require_env('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SIGNING_SECRET = require_env('STRIPE_WEBHOOK_SIGNING_SECRET')
 STRIPE_SUPPORT_EMAIL = 'support@mysite.com'
 """
+
+STRIPE_PUBLIC_KEY = require_env('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = require_env('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SIGNING_SECRET = require_env('STRIPE_WEBHOOK_SIGNING_SECRET')
+STRIPE_SUPPORT_EMAIL = 'support@aigc-singapore.com'
