@@ -20,7 +20,7 @@ def checkout_success(request):
         id = request.GET['id']
         next_url = request.GET['next']
         session = CheckoutSession.objects.get(id=id)
-    except KeyError, ObjectDoesNotExist:
+    except (KeyError, ObjectDoesNotExist):
         raise Http404()
 
     if session.complete:

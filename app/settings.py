@@ -41,14 +41,18 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'bootstrap4',
     'base',
-    # default feature apps
     'blurb',
-    # additional feature apps (uncomment to enable)
-    ## 'modern_email',
-    ## 'django_stripe',
-    # example app w/ index page for testing
     'example',
 ]
+
+SES_ENABLED = fetch_env('SES_ENABLED', 'FALSE')) == 'TRUE'
+MODERN_EMAIL_ENABLED = fetch_env('MODERN_EMAIL_ENABLED', 'FALSE')) == 'TRUE'
+STRIPE_ENABLED = fetch_env('STRIPE_ENABLED', 'FALSE')) == 'TRUE'
+
+if MODERN_EMAIL_ENABLED:
+    INSTALLED_APPS.append('modern_email')
+if STRIPE_ENABLED:
+    INSTALLED_APPS.append('django_stripe')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -165,32 +169,29 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email']
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 """
 
-# Uncomment to enable Django SES
-# Note that Django SES requires the pip package `django-ses`
-"""
-EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-AWS_SES_REGION_NAME = 'us-west-2'  # default is us-east-1
-AWS_SES_REGION_ENDPOINT = 'email.us-west-2.amazonaws.com'  # default is us-east-1
-"""
+if SES_ENABLED:
+    # default region for django_ses is us-east-1
+    # for django-template, we set the default to us-west-2 (Oregon)
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_ACCESS_KEY_ID = require_env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = require_env('AWS_SECRET_ACCESS_KEY')
+    AWS_SES_REGION_NAME = fetch_env('AWS_SES_REGION_NAME', 'us-west-2')
+    AWS_SES_REGION_ENDPOINT = 'email.{}.amazonaws.com'.format(
+        AWS_SES_REGION_NAME)
 
-# Uncomment to enable modern_email
-"""
-MODERN_EMAIL_STATIC_HOST = 'https://deployment-url.com/'
-MODERN_EMAIL_LOGO_IMAGE = 'img/logo.png'
-MODERN_EMAIL_CUSTOM_TEMPLATE = None
-MODERN_EMAIL_SUPPORT_EMAIL = 'support@deployment-url.com'
-MODERN_EMAIL_ADDRESS_LINE_1 = '1070 E Arques Ave'
-MODERN_EMAIL_ADDRESS_LINE_2 = 'Sunnyvale, CA 94085'
-MODERN_EMAIL_ORGANIZATION_NAME = 'My Company'
-MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
-"""
+if MODERN_EMAIL_ENABLED:
+    MODERN_EMAIL_STATIC_HOST = 'http://stage.gyu.io/'
+    MODERN_EMAIL_LOGO_IMAGE = 'img/logo.png'
+    MODERN_EMAIL_CUSTOM_TEMPLATE = None
+    MODERN_EMAIL_SUPPORT_EMAIL = 'support@gyu.io'
+    MODERN_EMAIL_ADDRESS_LINE_1 = 'Address Line 1'
+    MODERN_EMAIL_ADDRESS_LINE_2 = 'Address Line 2'
+    MODERN_EMAIL_ORGANIZATION_NAME = 'My Site'
+    MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
 
-# Uncomment to enable django_strip
-"""
-STRIPE_PUBLIC_KEY = require_env('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = require_env('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SIGNING_SECRET = require_env('STRIPE_WEBHOOK_SIGNING_SECRET')
-STRIPE_SUPPORT_EMAIL = 'support@mysite.com'
-"""
+if STRIPE_ENABLED:
+    STRIPE_PUBLIC_KEY = require_env('STRIPE_PUBLIC_KEY')
+    STRIPE_SECRET_KEY = require_env('STRIPE_SECRET_KEY')
+    STRIPE_WEBHOOK_SIGNING_SECRET = require_env(
+        'STRIPE_WEBHOOK_SIGNING_SECRET')
+    STRIPE_SUPPORT_EMAIL = 'support@gyu.io'
