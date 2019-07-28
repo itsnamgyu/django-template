@@ -1,19 +1,26 @@
+import datetime
 import logging
 import uuid
-import datetime
+from urllib.parse import urljoin
 
+import stripe
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import ModelFormMixin
 
-import stripe
 from django_stripe import settings
 
-from urllib.parse import urljoin
-
 logger = logging.getLogger(__name__)
+ADMIN_TEST_CHECKOUT_KEY = 'ADMIN_TEST_CHECKOUT'
+
+
+class TestCheckoutManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(key=ADMIN_TEST_CHECKOUT_KEY)
 
 
 class Checkout(models.Model):
@@ -29,7 +36,8 @@ class Checkout(models.Model):
                                                 auto_now=True)
     status = models.CharField(_('status'),
                               max_length=2,
-                              choices=status_choices)
+                              choices=status_choices,
+                              default=INCOMPLETE)
     amount = models.IntegerField(_('price amount'))
     currency = models.CharField(_('currency'), max_length=3, default='usd')
     quantity = models.IntegerField(_('quantity'), default=1)
@@ -41,19 +49,23 @@ class Checkout(models.Model):
                                         null=True,
                                         blank=True)
 
+    objects = models.Manager()
+    checkouts = models.Manager()
+    test_checkouts = TestCheckoutManager()
+
     class Meta:
         indexes = [models.Index(fields=['key'])]
 
-    def get_checkout_session(self,
-                             cancel_url,
-                             success_url,
-                             reuse_threshold=datetime.timedelta(hours=12)):
+    def get_session(self,
+                    cancel_url,
+                    success_url,
+                    reuse_threshold=datetime.timedelta(hours=12)):
         session = None
         try:
-            latest_session = self.checkout_set.latest()
+            latest_session = self.checkout_set.latest('date_created')
             reuse = True
-            reuse = reuse and latest_session.cancel_url == cancel_url
-            reuse = reuse and latest_session.success_url == success_url
+            reuse = reuse and (latest_session.cancel_url == cancel_url)
+            reuse = reuse and (latest_session.success_url == success_url)
             expired = latest_session.date_created < timezone.now(
             ) - reuse_threshold
             reuse = reuse and not expired
@@ -69,15 +81,21 @@ class Checkout(models.Model):
         return session
 
 
+@admin.register(Checkout)
+class CheckoutAdmin(admin.ModelAdmin):
+    list_display = ('key', 'name', 'status', 'date_created')
+    ordering = ('-date_created', )
+
+
 class CheckoutSession(models.Model):
     checkout = models.ForeignKey(Checkout,
                                  on_delete=models.SET_NULL,
                                  related_name='checkout_set',
                                  null=True)
-    session_id = models.CharField(_('stripe checkout id'),
-                                  max_length=128,
-                                  null=True,
-                                  blank=True)
+    stripe_session_id = models.CharField(_('stripe checkout id'),
+                                         max_length=128,
+                                         null=True,
+                                         blank=True)
     date_created = models.DateTimeField(_('date created'), auto_now_add=True)
     date_completed = models.DateTimeField(_('date completed'),
                                           null=True,
@@ -89,13 +107,14 @@ class CheckoutSession(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['session_id', 'date_created']),
+            models.Index(fields=['stripe_session_id', 'date_created']),
             models.Index(fields=['date_created']),
         ]
 
     @staticmethod
-    def verify(session_id):
-        session = CheckoutSession.objects.filter(session_id=session_id).first()
+    def verify(stripe_session_id):
+        session = CheckoutSession.objects.filter(
+            stripe_session_id=stripe_session_id).first()
         if session:
             if session.completed:
                 logger.warning('duplicate verification of checkout session ')
@@ -113,27 +132,45 @@ class CheckoutSession(models.Model):
 
     @staticmethod
     def init_session(checkout: Checkout, cancel_url, success_url):
-        session = CheckoutSession(checkout=checkout)
-
-        stripe.api_key = settings.SECRET_KEY
+        session = CheckoutSession(checkout=checkout,
+                                  cancel_url=cancel_url,
+                                  success_url=success_url)
 
         success_url = success_url + '?id={}&next={}'.format(
             checkout.id, success_url)
+        if checkout.description:
+            description = checkout.description
+        else:
+            description = None
+
+        if checkout.prefilled_email:
+            customer_email = checkout.prefilled_email
+        else:
+            customer_email = None
+
+        stripe.api_key = settings.SECRET_KEY
         stripe_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
                 dict(
-                    name=payment.name,
-                    description=payment.description,
-                    amount=payment.amount,
-                    currency=payment.currency,
-                    quantity=payment.quantity,
+                    name=checkout.name,
+                    description=description,
+                    amount=checkout.amount,
+                    currency=checkout.currency,
+                    quantity=checkout.quantity,
                 )
             ],
             success_url=success_url,
             cancel_url=cancel_url,
+            customer_email=customer_email,
         )
-        session.id = stripe_session.id
+        session.stripe_session_id = stripe_session.id
         session.save()
 
         return session
+
+
+@admin.register(CheckoutSession)
+class CheckoutSessionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'checkout', 'date_created')
+    ordering = ('-date_created', )

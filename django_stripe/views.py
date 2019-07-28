@@ -1,18 +1,68 @@
 import logging
-import stripe
 import traceback
 
+import stripe
+from allauth.utils import build_absolute_uri
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
-from django.shortcuts import render, redirect
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
 
-from django_stripe import settings
+from django_stripe import session_status, settings
+from django_stripe.forms import *
+from django_stripe.forms import TestCheckoutForm
 from django_stripe.models import *
-from django_stripe import session_status
 
 logger = logging.getLogger(__name__)
+
+
+def index(request):
+    context = dict()
+    context['url_webhook_checkout_completed'] = request.build_absolute_uri(
+        reverse('django_stripe:webhook_checkout_completed'))
+    context['test_checkouts'] = Checkout.test_checkouts.all()
+    return render(request, 'django_stripe/index.html', context=context)
+
+
+class TestCheckoutCreateView(View):
+    def get(self, request, *args, **kwargs):
+        context = dict()
+        context['checkout_form'] = TestCheckoutForm()
+        return render(request,
+                      'django_stripe/test_checkout/create.html',
+                      context=context)
+
+    def post(self, request, *args, **kwargs):
+        checkout = Checkout(key=ADMIN_TEST_CHECKOUT_KEY)
+        form = TestCheckoutForm(request.POST, instance=checkout)
+        if form.is_valid():
+            form.save()
+            return redirect('django_stripe:index')
+        else:
+            context = dict()
+            context['checkout_form'] = form
+            return render(request,
+                          'django_stripe/test_checkout/create.html',
+                          context=context)
+
+
+class TestCheckoutPaymentView(View):
+    def get(self, request, id, *args, **kwargs):
+        checkout: Checkout = get_object_or_404(Checkout.test_checkouts, id=id)
+        cancel_url = request.build_absolute_uri(
+            reverse('django_stripe:test_checkout_payment', args=(id, )))
+        success_url = request.build_absolute_uri(
+            reverse('django_stripe:test_checkout_payment', args=(id, )))
+        context = dict()
+        context['checkout'] = checkout
+        context['checkout_session'] = checkout.get_session(
+            cancel_url, success_url)
+
+        return render(request,
+                      'django_stripe/test_checkout/payment.html',
+                      context=context)
 
 
 def checkout_success(request):
