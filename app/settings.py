@@ -23,9 +23,8 @@ if DJANGO_ENV == 'DEV':
     DEBUG = True
     ALLOWED_HOSTS = ['*']
 else:
-    # Consider changing these for "real" production when your project get bigger
-    DEBUG = True
-    ALLOWED_HOSTS = ['*']
+    DEBUG = False
+    ALLOWED_HOSTS = ['*']  # change this for your real project
 
 SECRET_KEY = require_env('SECRET_KEY')
 
