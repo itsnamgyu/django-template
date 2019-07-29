@@ -9,6 +9,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib import admin
+from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import ModelFormMixin
 
@@ -135,9 +136,14 @@ class CheckoutSession(models.Model):
         session = CheckoutSession(checkout=checkout,
                                   cancel_url=cancel_url,
                                   success_url=success_url)
+        session.save()
 
-        success_url = success_url + '?id={}&next={}'.format(
-            checkout.id, success_url)
+        stripe_success_url = urljoin(
+            settings.STATIC_HOST,
+            reverse('django_stripe:checkout_success') +
+            '?id={}'.format(session.id))
+        print(stripe_success_url)
+
         if checkout.description:
             description = checkout.description
         else:
@@ -160,7 +166,7 @@ class CheckoutSession(models.Model):
                     quantity=checkout.quantity,
                 )
             ],
-            success_url=success_url,
+            success_url=stripe_success_url,
             cancel_url=cancel_url,
             customer_email=customer_email,
         )

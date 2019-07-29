@@ -69,12 +69,11 @@ class TestCheckoutPaymentView(SuperUserRequiredMixin, View):
 def checkout_success(request):
     try:
         id = request.GET['id']
-        next_url = request.GET['next']
         session = CheckoutSession.objects.get(id=id)
     except (KeyError, ObjectDoesNotExist):
         raise Http404()
 
-    if session.complete:
+    if session.completed:
         if session.checkout.status == Checkout.COMPLETE:
             status = session_status.COMPLETE
         elif session.checkout.status == Checkout.MULTIPLE_CHARGES:
@@ -88,7 +87,7 @@ def checkout_success(request):
     else:
         status = session_status.INCOMPLETE
 
-    redirect_url = next_url + '?status={}'.format(status)
+    redirect_url = session.success_url + '?status={}'.format(status)
     return redirect(redirect_url)
 
 
