@@ -121,6 +121,7 @@ class CheckoutSession(models.Model):
                 logger.warning('duplicate verification of checkout session ')
             else:
                 session.completed = True
+                session.save()
                 checkout = session.checkout
                 if checkout.status == Checkout.INCOMPLETE:
                     checkout.status = Checkout.COMPLETE
