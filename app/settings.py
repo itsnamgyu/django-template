@@ -180,13 +180,13 @@ if SES_ENABLED:
         AWS_SES_REGION_NAME)
 
 if MODERN_EMAIL_ENABLED:
-    MODERN_EMAIL_STATIC_HOST = 'http://stage.gyu.io/'
-    MODERN_EMAIL_LOGO_IMAGE = 'img/logo.png'
+    MODERN_EMAIL_STATIC_HOST = 'http://dev.django.namgyu.io/'
+    MODERN_EMAIL_LOGO_IMAGE = 'example/logo.png'
     MODERN_EMAIL_CUSTOM_TEMPLATE = None
-    MODERN_EMAIL_SUPPORT_EMAIL = 'support@gyu.io'
+    MODERN_EMAIL_SUPPORT_EMAIL = 'support@namgyu.io'
     MODERN_EMAIL_ADDRESS_LINE_1 = 'Address Line 1'
     MODERN_EMAIL_ADDRESS_LINE_2 = 'Address Line 2'
-    MODERN_EMAIL_ORGANIZATION_NAME = 'My Site'
+    MODERN_EMAIL_ORGANIZATION_NAME = 'Django Template Org'
     MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
 
 if STRIPE_ENABLED:
