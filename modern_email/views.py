@@ -4,8 +4,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.views.generic import View
 
-from base.mixins import StaffMemberRequiredMixin, SuperUserRequiredMixin
 from modern_email.forms import TestMailForm
+from modern_email.mixins import *
 
 
 class TestView(SuperUserRequiredMixin, View):
