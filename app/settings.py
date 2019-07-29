@@ -128,7 +128,11 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-if not DEBUG:
+if DEBUG:
+    static_root = fetch_env('STATIC_ROOT')
+    if static_root:
+        STATIC_ROOT = static_root
+else:
     STATIC_ROOT = require_env('STATIC_ROOT')
 
 LOGIN_REDIRECT_URL = '/'
