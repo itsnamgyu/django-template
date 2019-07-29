@@ -12,21 +12,22 @@ from django.views.generic import View
 
 from django_stripe import session_status, settings
 from django_stripe.forms import *
-from django_stripe.forms import TestCheckoutForm
 from django_stripe.models import *
+from django_stripe.mixins import *
 
 logger = logging.getLogger(__name__)
 
 
-def index(request):
-    context = dict()
-    context['url_webhook_checkout_completed'] = request.build_absolute_uri(
-        reverse('django_stripe:webhook_checkout_completed'))
-    context['test_checkouts'] = Checkout.test_checkouts.all()
-    return render(request, 'django_stripe/index.html', context=context)
+class IndexView(SuperUserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        context = dict()
+        context['url_webhook_checkout_completed'] = request.build_absolute_uri(
+            reverse('django_stripe:webhook_checkout_completed'))
+        context['test_checkouts'] = Checkout.test_checkouts.all()
+        return render(request, 'django_stripe/index.html', context=context)
 
 
-class TestCheckoutCreateView(View):
+class TestCheckoutCreateView(SuperUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = dict()
         context['checkout_form'] = TestCheckoutForm()
@@ -48,7 +49,7 @@ class TestCheckoutCreateView(View):
                           context=context)
 
 
-class TestCheckoutPaymentView(View):
+class TestCheckoutPaymentView(SuperUserRequiredMixin, View):
     def get(self, request, id, *args, **kwargs):
         checkout: Checkout = get_object_or_404(Checkout.test_checkouts, id=id)
         cancel_url = request.build_absolute_uri(

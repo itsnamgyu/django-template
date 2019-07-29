@@ -6,7 +6,7 @@ from django_stripe.views import checkout_completed_webhook
 
 app_name = 'django_stripe'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('test_checkout/create',
          views.TestCheckoutCreateView.as_view(),
          name='test_checkout_create'),
