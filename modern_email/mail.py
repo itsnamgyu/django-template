@@ -34,6 +34,7 @@ def send_mail(subject,
               message,
               from_email,
               recipient_list,
+              from_name=None,
               html_message=None,
               **kwargs):
     context = get_context()
@@ -44,9 +45,15 @@ def send_mail(subject,
 
     templated_message = render_to_string('modern_email/default_template.html',
                                          context=context)
+
+    if from_name:
+        named_from_email = '"{}" <{}>'.format(from_name, from_email)
+    else:
+        named_from_email = from_email
+
     mail.send_mail(subject,
                    message,
-                   from_email,
+                   named_from_email,
                    recipient_list,
                    html_message=templated_message,
                    **kwargs)
