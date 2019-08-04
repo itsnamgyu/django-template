@@ -24,7 +24,7 @@ def get_context():
     if start == end:
         year_range = start
     else:
-        year_range = '{} - {}'.format(start, end)
+        year_range = '{}-{}'.format(start, end)
     context['copyright_year_range'] = year_range
 
     return context
