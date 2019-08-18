@@ -27,7 +27,7 @@ pip install mod-wsgi
 
 ```bash
 # start at root folder
-# enable virtual environment
+source venv/bin/activate # enable virtual environment
 export PROJECT_DIR=`pwd`
 ./scripts/install --host=mysite.com
 ```
