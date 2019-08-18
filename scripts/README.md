@@ -31,3 +31,13 @@ source venv/bin/activate # enable virtual environment
 export PROJECT_DIR=`pwd`
 ./scripts/install --host=mysite.com
 ```
+
+#### Start apache service
+
+Make sure to restart Apache service using
+
+```bash
+sudo apachectl restart
+```
+
+*May return error status if Apache is already running*
