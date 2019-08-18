@@ -5,22 +5,11 @@
 ### Install requirements
 
 - Apache 2
-- Virtual environment (`venv` or equivalent)
-- mod-wsgi Python package
+- Python 3.5+
 
 ```
 sudo apt install apache2
 sudo apt install apache2-dev
-```
-
-#### Set up a virtual environment (Python 3.5+)
-
-```
-# start at root folder
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-pip install mod-wsgi
 ```
 
 ### Run script!
