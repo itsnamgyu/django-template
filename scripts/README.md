@@ -12,7 +12,7 @@ sudo apt install apache2
 sudo apt install apache2-dev
 ```
 
-#### Install a virtual enviornment (Python 3.5+)
+#### Set up a virtual environment (Python 3.5+)
 
 ```
 # start at root folder
