@@ -3,5 +3,5 @@
 ```bash
 # start at root folder
 export PROJECT_DIR=`pwd`
-./scripts/install
+./scripts/install --host=mysite.com
 ```
