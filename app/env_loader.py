@@ -18,9 +18,12 @@ def check_missing_envs(app_configs, **kwargs):
     errors = []
     for env in missing_required_envs:
         errors.append(
-            Error('Required environment variable "{}" missing'.format(env),
-                  hint='Add this to your .env file',
-                  obj='settings.py'))
+            Error(
+                'Required environment variable "{}" missing'.format(env),
+                hint="Add this to your .env file",
+                obj="settings.py",
+            )
+        )
     return errors
 
 
@@ -34,5 +37,5 @@ def require_env(key):
 def fetch_env(key, default=None):
     value = os.environ.get(key, default)
     if not value:
-        print('Using default value for {:30s} : {}'.format(key, value))
+        print("Using default value for {:30s} : {}".format(key, value))
     return value

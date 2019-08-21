@@ -24,7 +24,7 @@ def blurb(context, identifier):
 
     user = context.request.user
     is_superuser = user and user.is_superuser
-    admin_link = reverse('admin:blurb_blurb_change', args=(blurb.id, ))
+    admin_link = reverse("admin:blurb_blurb_change", args=(blurb.id,))
 
     if blurb.content == None:
         if settings.DEBUG:

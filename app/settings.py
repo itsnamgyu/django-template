@@ -17,97 +17,87 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Variable to differentiate between development, staging, production etc.
 # Consider changing <APP> to the name of your project. You MUST apply the
 # same changes in wsgi.py
-DJANGO_ENV = fetch_env('DJANGO_APP_ENV', default='DEV')
+DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 
-if DJANGO_ENV == 'DEV':
+if DJANGO_ENV == "DEV":
     DEBUG = True
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = False
-    ALLOWED_HOSTS = ['*']  # change this for your real project
+    ALLOWED_HOSTS = ["*"]  # change this for your real project
 
-SECRET_KEY = require_env('SECRET_KEY')
+SECRET_KEY = require_env("SECRET_KEY")
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'bootstrap4',
-    'base',
-    'blurb',
-    'example',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "bootstrap4",
+    "base",
+    "blurb",
+    "example",
 ]
 
-SES_ENABLED = fetch_env('SES_ENABLED', 'FALSE') == 'TRUE'
-MODERN_EMAIL_ENABLED = fetch_env('MODERN_EMAIL_ENABLED', 'FALSE') == 'TRUE'
-STRIPE_ENABLED = fetch_env('STRIPE_ENABLED', 'FALSE') == 'TRUE'
+SES_ENABLED = fetch_env("SES_ENABLED", "FALSE") == "TRUE"
+MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE") == "TRUE"
+STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE") == "TRUE"
 
 if MODERN_EMAIL_ENABLED:
-    INSTALLED_APPS.append('modern_email')
+    INSTALLED_APPS.append("modern_email")
 if STRIPE_ENABLED:
-    INSTALLED_APPS.append('django_stripe')
+    INSTALLED_APPS.append("django_stripe")
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = "app.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ]
         },
-    },
+    }
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -117,9 +107,9 @@ AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.facebook.FacebookOAuth2',  # uncomment for Facebook signin
 )
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -127,12 +117,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 if not DEBUG:
-    STATIC_ROOT = require_env('STATIC_ROOT')
+    STATIC_ROOT = require_env("STATIC_ROOT")
 
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 # The following settings pertain to django-allauth
 """
@@ -143,10 +133,10 @@ https://django-allauth.readthedocs.io/en/latest/installation.html
 """
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
@@ -172,26 +162,24 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 if SES_ENABLED:
     # default region for django_ses is us-east-1
     # for django-template, we set the default to us-west-2 (Oregon)
-    EMAIL_BACKEND = 'django_ses.SESBackend'
-    AWS_ACCESS_KEY_ID = require_env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = require_env('AWS_SECRET_ACCESS_KEY')
-    AWS_SES_REGION_NAME = fetch_env('AWS_SES_REGION_NAME', 'us-west-2')
-    AWS_SES_REGION_ENDPOINT = 'email.{}.amazonaws.com'.format(
-        AWS_SES_REGION_NAME)
+    EMAIL_BACKEND = "django_ses.SESBackend"
+    AWS_ACCESS_KEY_ID = require_env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = require_env("AWS_SECRET_ACCESS_KEY")
+    AWS_SES_REGION_NAME = fetch_env("AWS_SES_REGION_NAME", "us-west-2")
+    AWS_SES_REGION_ENDPOINT = "email.{}.amazonaws.com".format(AWS_SES_REGION_NAME)
 
 if MODERN_EMAIL_ENABLED:
-    MODERN_EMAIL_STATIC_HOST = 'http://stage.gyu.io/'
-    MODERN_EMAIL_LOGO_IMAGE = 'img/logo.png'
+    MODERN_EMAIL_STATIC_HOST = "http://stage.gyu.io/"
+    MODERN_EMAIL_LOGO_IMAGE = "img/logo.png"
     MODERN_EMAIL_CUSTOM_TEMPLATE = None
-    MODERN_EMAIL_SUPPORT_EMAIL = 'support@gyu.io'
-    MODERN_EMAIL_ADDRESS_LINE_1 = 'Address Line 1'
-    MODERN_EMAIL_ADDRESS_LINE_2 = 'Address Line 2'
-    MODERN_EMAIL_ORGANIZATION_NAME = 'My Site'
-    MODERN_EMAIL_COPYRIGHT_START_YEAR = '2019'
+    MODERN_EMAIL_SUPPORT_EMAIL = "support@gyu.io"
+    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"
+    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"
+    MODERN_EMAIL_ORGANIZATION_NAME = "My Site"
+    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"
 
 if STRIPE_ENABLED:
-    STRIPE_PUBLIC_KEY = require_env('STRIPE_PUBLIC_KEY')
-    STRIPE_SECRET_KEY = require_env('STRIPE_SECRET_KEY')
-    STRIPE_WEBHOOK_SIGNING_SECRET = require_env(
-        'STRIPE_WEBHOOK_SIGNING_SECRET')
-    STRIPE_SUPPORT_EMAIL = 'support@gyu.io'
+    STRIPE_PUBLIC_KEY = require_env("STRIPE_PUBLIC_KEY")
+    STRIPE_SECRET_KEY = require_env("STRIPE_SECRET_KEY")
+    STRIPE_WEBHOOK_SIGNING_SECRET = require_env("STRIPE_WEBHOOK_SIGNING_SECRET")
+    STRIPE_SUPPORT_EMAIL = "support@gyu.io"
