@@ -20,14 +20,14 @@ from django.urls import include, path
 from app.settings import MODERN_EMAIL_ENABLED, STRIPE_ENABLED
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('example.urls')),
-    path('accounts/', include('allauth.urls')),
+    path("admin/", admin.site.urls),
+    path("", include("example.urls")),
+    path("accounts/", include("allauth.urls")),
     # path('', include('social_django.urls', namespace='social')),  # enable for social login
 ]
 
 if settings.MODERN_EMAIL_ENABLED:
-    urlpatterns.append(path('modern-email/', include('modern_email.urls')))
+    urlpatterns.append(path("modern-email/", include("modern_email.urls")))
 
 if settings.STRIPE_ENABLED:
-    urlpatterns.append(path('stripe/', include('django_stripe.urls')))
+    urlpatterns.append(path("stripe/", include("django_stripe.urls")))

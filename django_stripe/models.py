@@ -16,7 +16,7 @@ from django.views.generic.edit import ModelFormMixin
 from django_stripe import settings
 
 logger = logging.getLogger(__name__)
-ADMIN_TEST_CHECKOUT_KEY = 'ADMIN_TEST_CHECKOUT'
+ADMIN_TEST_CHECKOUT_KEY = "ADMIN_TEST_CHECKOUT"
 
 
 class TestCheckoutManager(models.Manager):
@@ -25,50 +25,49 @@ class TestCheckoutManager(models.Manager):
 
 
 class Checkout(models.Model):
-    COMPLETE = 'CO'
-    INCOMPLETE = 'IC'
-    MULTIPLE_CHARGES = 'MC'
-    status_choices = ((COMPLETE, 'Complete'), (INCOMPLETE, 'Incomplete'),
-                      (MULTIPLE_CHARGES, 'Multiple Charges'))
+    COMPLETE = "CO"
+    INCOMPLETE = "IC"
+    MULTIPLE_CHARGES = "MC"
+    status_choices = (
+        (COMPLETE, "Complete"),
+        (INCOMPLETE, "Incomplete"),
+        (MULTIPLE_CHARGES, "Multiple Charges"),
+    )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    date_created = models.DateTimeField(_('date created'), auto_now_add=True)
-    date_status_modified = models.DateTimeField(_('date status modified'),
-                                                auto_now=True)
-    status = models.CharField(_('status'),
-                              max_length=2,
-                              choices=status_choices,
-                              default=INCOMPLETE)
-    amount = models.IntegerField(_('price amount'))
-    currency = models.CharField(_('currency'), max_length=3, default='usd')
-    quantity = models.IntegerField(_('quantity'), default=1)
+    date_created = models.DateTimeField(_("date created"), auto_now_add=True)
+    date_status_modified = models.DateTimeField(
+        _("date status modified"), auto_now=True
+    )
+    status = models.CharField(
+        _("status"), max_length=2, choices=status_choices, default=INCOMPLETE
+    )
+    amount = models.IntegerField(_("price amount"))
+    currency = models.CharField(_("currency"), max_length=3, default="usd")
+    quantity = models.IntegerField(_("quantity"), default=1)
 
-    name = models.TextField(_('name'))
-    description = models.TextField(_('description'), null=True, blank=True)
-    key = models.CharField(_('key'), max_length=256, null=True, blank=True)
-    prefilled_email = models.EmailField(_('prefilled email'),
-                                        null=True,
-                                        blank=True)
+    name = models.TextField(_("name"))
+    description = models.TextField(_("description"), null=True, blank=True)
+    key = models.CharField(_("key"), max_length=256, null=True, blank=True)
+    prefilled_email = models.EmailField(_("prefilled email"), null=True, blank=True)
 
     objects = models.Manager()
     checkouts = models.Manager()
     test_checkouts = TestCheckoutManager()
 
     class Meta:
-        indexes = [models.Index(fields=['key'])]
+        indexes = [models.Index(fields=["key"])]
 
-    def get_session(self,
-                    cancel_url,
-                    success_url,
-                    reuse_threshold=datetime.timedelta(hours=12)):
+    def get_session(
+        self, cancel_url, success_url, reuse_threshold=datetime.timedelta(hours=12)
+    ):
         session = None
         try:
-            latest_session = self.checkout_set.latest('date_created')
+            latest_session = self.checkout_set.latest("date_created")
             reuse = True
             reuse = reuse and (latest_session.cancel_url == cancel_url)
             reuse = reuse and (latest_session.success_url == success_url)
-            expired = latest_session.date_created < timezone.now(
-            ) - reuse_threshold
+            expired = latest_session.date_created < timezone.now() - reuse_threshold
             reuse = reuse and not expired
             if reuse:
                 session = latest_session
@@ -76,49 +75,45 @@ class Checkout(models.Model):
             pass
 
         if not session:
-            session = CheckoutSession.init_session(self, cancel_url,
-                                                   success_url)
+            session = CheckoutSession.init_session(self, cancel_url, success_url)
 
         return session
 
 
 @admin.register(Checkout)
 class CheckoutAdmin(admin.ModelAdmin):
-    list_display = ('key', 'name', 'status', 'date_created')
-    ordering = ('-date_created', )
+    list_display = ("key", "name", "status", "date_created")
+    ordering = ("-date_created",)
 
 
 class CheckoutSession(models.Model):
-    checkout = models.ForeignKey(Checkout,
-                                 on_delete=models.SET_NULL,
-                                 related_name='checkout_set',
-                                 null=True)
-    stripe_session_id = models.CharField(_('stripe checkout id'),
-                                         max_length=128,
-                                         null=True,
-                                         blank=True)
-    date_created = models.DateTimeField(_('date created'), auto_now_add=True)
-    date_completed = models.DateTimeField(_('date completed'),
-                                          null=True,
-                                          blank=True)
-    completed = models.BooleanField(_('completed'), default=False)
+    checkout = models.ForeignKey(
+        Checkout, on_delete=models.SET_NULL, related_name="checkout_set", null=True
+    )
+    stripe_session_id = models.CharField(
+        _("stripe checkout id"), max_length=128, null=True, blank=True
+    )
+    date_created = models.DateTimeField(_("date created"), auto_now_add=True)
+    date_completed = models.DateTimeField(_("date completed"), null=True, blank=True)
+    completed = models.BooleanField(_("completed"), default=False)
 
-    cancel_url = models.URLField(_('cancel url'))
-    success_url = models.URLField(_('success_url'))
+    cancel_url = models.URLField(_("cancel url"))
+    success_url = models.URLField(_("success_url"))
 
     class Meta:
         indexes = [
-            models.Index(fields=['stripe_session_id', 'date_created']),
-            models.Index(fields=['date_created']),
+            models.Index(fields=["stripe_session_id", "date_created"]),
+            models.Index(fields=["date_created"]),
         ]
 
     @staticmethod
     def verify(stripe_session_id):
         session = CheckoutSession.objects.filter(
-            stripe_session_id=stripe_session_id).first()
+            stripe_session_id=stripe_session_id
+        ).first()
         if session:
             if session.completed:
-                logger.warning('duplicate verification of checkout session ')
+                logger.warning("duplicate verification of checkout session ")
             else:
                 session.completed = True
                 session.save()
@@ -134,15 +129,15 @@ class CheckoutSession(models.Model):
 
     @staticmethod
     def init_session(checkout: Checkout, cancel_url, success_url):
-        session = CheckoutSession(checkout=checkout,
-                                  cancel_url=cancel_url,
-                                  success_url=success_url)
+        session = CheckoutSession(
+            checkout=checkout, cancel_url=cancel_url, success_url=success_url
+        )
         session.save()
 
         stripe_success_url = urljoin(
             settings.STATIC_HOST,
-            reverse('django_stripe:checkout_success') +
-            '?id={}'.format(session.id))
+            reverse("django_stripe:checkout_success") + "?id={}".format(session.id),
+        )
         print(stripe_success_url)
 
         if checkout.description:
@@ -157,7 +152,7 @@ class CheckoutSession(models.Model):
 
         stripe.api_key = settings.SECRET_KEY
         stripe_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
+            payment_method_types=["card"],
             line_items=[
                 dict(
                     name=checkout.name,
@@ -179,5 +174,5 @@ class CheckoutSession(models.Model):
 
 @admin.register(CheckoutSession)
 class CheckoutSessionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'checkout', 'date_created')
-    ordering = ('-date_created', )
+    list_display = ("id", "checkout", "date_created")
+    ordering = ("-date_created",)

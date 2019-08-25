@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 
 
 class StaffMemberRequiredMixin(UserPassesTestMixin):
-    login_url = reverse_lazy('admin:login')
+    login_url = reverse_lazy("admin:login")
 
     def test_func(self):
         user = self.request.user
@@ -11,7 +11,7 @@ class StaffMemberRequiredMixin(UserPassesTestMixin):
 
 
 class SuperUserRequiredMixin(UserPassesTestMixin):
-    login_url = reverse_lazy('admin:login')
+    login_url = reverse_lazy("admin:login")
 
     def test_func(self):
         user = self.request.user

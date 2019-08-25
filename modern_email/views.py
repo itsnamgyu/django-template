@@ -12,7 +12,7 @@ class TestView(SuperUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         test_mail_form = TestMailForm()
         context = dict(form=test_mail_form)
-        return render(self.request, 'modern_email/test.html', context=context)
+        return render(self.request, "modern_email/test.html", context=context)
 
     def post(self, request, *args, **kwargs):
         test_mail_form = TestMailForm(request.POST)
@@ -23,11 +23,12 @@ class TestView(SuperUserRequiredMixin, View):
             except Exception as e:
                 message = traceback.format_exc()
             else:
-                message = 'Success! The email should have been sent to {}'.format(
-                    test_mail_form.cleaned_data['recipient'])
+                message = "Success! The email should have been sent to {}".format(
+                    test_mail_form.cleaned_data["recipient"]
+                )
         else:
-            message = 'Invalid data'
+            message = "Invalid data"
 
         context = dict(form=test_mail_form, message=message)
 
-        return render(self.request, 'modern_email/test.html', context=context)
+        return render(self.request, "modern_email/test.html", context=context)

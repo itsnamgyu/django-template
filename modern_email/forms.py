@@ -11,15 +11,18 @@ class TestMailForm(forms.Form):
     html_message = forms.CharField(required=False)
 
     def send_mail(self):
-        sender = self.cleaned_data.get('sender')
-        sender_name = self.cleaned_data.get('sender_name', None)
-        recipient = self.cleaned_data.get('recipient')
-        subject = self.cleaned_data.get('subject')
-        message = self.cleaned_data.get('message')
-        html_message = self.cleaned_data.get('html_message')
+        sender = self.cleaned_data.get("sender")
+        sender_name = self.cleaned_data.get("sender_name", None)
+        recipient = self.cleaned_data.get("recipient")
+        subject = self.cleaned_data.get("subject")
+        message = self.cleaned_data.get("message")
+        html_message = self.cleaned_data.get("html_message")
 
-        send_mail(subject,
-                  message,
-                  sender, [recipient],
-                  from_name=sender_name,
-                  html_message=html_message)
+        send_mail(
+            subject,
+            message,
+            sender,
+            [recipient],
+            from_name=sender_name,
+            html_message=html_message,
+        )

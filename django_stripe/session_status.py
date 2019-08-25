@@ -1,3 +1,3 @@
-COMPLETE = 'complete'
-INCOMPLETE = 'incomplete'
-MULTIPLE_CHARGES = 'multiple_charges'
+COMPLETE = "complete"
+INCOMPLETE = "incomplete"
+MULTIPLE_CHARGES = "multiple_charges"
