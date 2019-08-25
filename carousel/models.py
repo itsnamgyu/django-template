@@ -1,9 +1,10 @@
 import os
 
 from django.db import models
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-
-from versatileimagefield.fields import VersatileImageField, PPOIField
+from versatileimagefield.fields import PPOIField, VersatileImageField
 
 
 class Image(models.Model):
@@ -37,6 +38,28 @@ class Carousel(models.Model):
     date_created = models.DateTimeField(_("date created"), auto_now_add=True)
     identifier = models.CharField(_("identifier"), max_length=256)
 
+    @staticmethod
+    def get(identifier):
+        """Convenience method"""
+        return Carousel.objects.get_or_create(identifier=identifier)
+
+    def empty(self):
+        return not self.placements.exists()
+
+    def visible(self):
+        return not self.empty()
+
+    def to_html(self):
+        if not self.empty():
+            context = {"carousel": self}
+            rendered = render_to_string("carousel/carousel.html", context=context)
+            return mark_safe(rendered)
+        else:
+            return mark_safe("")
+
+    def __str__(self):
+        return self.identifier
+
 
 class Placement(models.Model):
     date_created = models.DateTimeField(_("date created"), auto_now_add=True)
@@ -44,4 +67,3 @@ class Placement(models.Model):
     carousel = models.ForeignKey(
         Carousel, related_name="placements", on_delete=models.CASCADE
     )
-
