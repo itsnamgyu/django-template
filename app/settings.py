@@ -10,7 +10,8 @@ github.com/itsnamgyu/django-template
 import os
 
 from django.core.exceptions import ImproperlyConfigured
-from app.env_loader import require_env, fetch_env
+
+from .env_loader import require_env, fetch_env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -120,6 +121,9 @@ USE_TZ = True
 STATIC_URL = "/static/"
 if not DEBUG:
     STATIC_ROOT = require_env("STATIC_ROOT")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
