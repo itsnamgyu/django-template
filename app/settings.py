@@ -41,8 +41,10 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
+    "versatileimagefield",
     "base",
     "blurb",
+    "carousel",
     "example",
 ]
 
