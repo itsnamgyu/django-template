@@ -1,6 +1,7 @@
 {% extends 'base/base.html' %}
 {% load bootstrap4 %}
 {% load carousel %}
+{% load admin_link %}
 
 {% block head %}
 <title>django-template Carousel Test</title>
@@ -18,7 +19,9 @@
   <p>Add images to the carousel in the admin console. Note that empty carousels will be hidden by default.</p>
   {% endif %}
 
-  <a href="{% url 'example:index' %}">
+  {% admin_link test_carousel 'change' %}
+
+  <a href="{% url 'example:index' %}" class="d-block">
     <button class="btn btn-primary mt-5">Back</button>
   </a>
 </div>
