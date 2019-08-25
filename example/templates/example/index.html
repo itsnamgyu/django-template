@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {% load bootstrap4 %}
+{% load admin_link %}
 
 {% block head %}
 <title>django-template Example Page</title>
@@ -16,10 +17,25 @@
   <p>{{ messages }}</p>
   {% endif %}
 
-  <h4 class="mt-4">Test out the blurb system</h4>
+  <h4 class="mt-4">Test out the blurb app</h4>
   <a href="{% url 'example:blurb_test' %}">
     <button class="btn btn-primary mt-2">Blurb Test</button>
   </a>
+
+  <h4 class="mt-4">Test out the carousel app</h4>
+  <a href="{% url 'example:carousel_test' %}">
+    <button class="btn btn-primary mt-2">Carousel Test</button>
+  </a>
+
+  <h4 class="mt-4">Test out the admin_link app</h4>
+  <p>These are admin links related to users.</p>
+  {% if not request.user.is_superuser %}
+  <p>You may need to sign in as admin to see these links.</p>
+  {% endif %}
+  {% admin_link request.user 'changelist' %}
+  {% admin_link request.user 'add' %}
+  {% admin_link request.user 'change' %}
+  {% admin_link request.user 'delete' %}
 
   <h4 class="mt-4">Support The Project 💌</h4>
   <a href="https://github.com/itsnamgyu/django-template">

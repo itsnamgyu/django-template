@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.static import static
 
 from app.settings import MODERN_EMAIL_ENABLED, STRIPE_ENABLED
 
@@ -31,3 +32,6 @@ if settings.MODERN_EMAIL_ENABLED:
 
 if settings.STRIPE_ENABLED:
     urlpatterns.append(path("stripe/", include("django_stripe.urls")))
+
+if settings.DEBUG:
+    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))

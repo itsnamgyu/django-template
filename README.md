@@ -1,10 +1,10 @@
-# Django Templates
+# Django templates
 
 ## Requirements
 
-Python 3.6.x or 3.7.x should work without problems. This template is being built mainly on 3.6.5.
+Python 3.6.x or 3.7.x should work without problems. This template is being built mainly on 3.7.3.
 
-## Getting Started
+## Getting started
 
 ### Initialize `.env`
 
@@ -14,7 +14,7 @@ For now, just copy the example file.
 cp .env.example .env
 ```
 
-### Initialize Virtual Environment Via `venv`
+### Initialize virtual environment via `venv`
 
 ```
 python3 -m venv venv
@@ -28,9 +28,9 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-## Environment Variables
+## Environment variables
 
-### Deployment Stage
+### Deployment stage
 
 Django only provides the boolean variable `DEBUG` for differentiating deployment stages. In this template, we provide a `DJANGO_ENV` variable in `settings.py`, which is read from your environment variable: `DJANGO_IVR_ENV` (default is `'DEV'`).
 
@@ -47,7 +47,7 @@ You don't need to set `DEBUG = False` for production at the beginning of your pr
 
 > This pattern is inspired by Node's `NODE_ENV`.
 
-### Other Environment Variables
+### Other environment variables
 
 For other environment variables such as SECRET_KEY, social authentication keys, etc., we use the `.env` pattern. Refer to the `.env.example` file.
 
@@ -55,11 +55,11 @@ You should have a `.env` file at the root of your project, with the same format 
 
 > This pattern is inspired by `dotenv` from Node.
 
-## Apache + `mod-wsgi` Deployment
+## Apache + `mod-wsgi` deployment
 
 I might make a script for this. For now, refer to [this article in my very very useful wiki](https://github.com/itsnamgyu/ugh/wiki/Django-Deployment-on-Apache) or [my older wiki](https://github.com/itsnamgyu/django-two/wiki) for additional info.
 
-## Blurb App
+## Blurb app
 
 Don't you just hate writing long paragraphs inside HTML? You could put it inside the code or use some external text file, but who's got time for that?.i
 
@@ -67,14 +67,16 @@ The blurb app provides models and template tags that allow you to easily include
 
 > Drawback: It doesn't support formatted text yet. It does support linebreaks tho!
 
-### Usage: Adding A Blurb
+### Usage: adding a blurb
 
 1. Load the blurb tag at the start of a template
+
 ```django-html
 {% load blurb %}
 ```
 
 2. Add a blurb to the page with some meaningful identifier.
+
 ```django-html
 {% blurb 'index/title' %}
 ```
@@ -85,7 +87,7 @@ The blurb app provides models and template tags that allow you to easily include
 
 5. Load the template again, and you'll see your content, right there! You can edit the text at any time!
 
-### Usage: Migrating To Another Environment
+### Usage: migrating To another environment
 
 Since the blurbs are stored in the DB, you need to migrate them for each environment. This should be your typical flow.
 
@@ -102,15 +104,17 @@ Since the blurbs are stored in the DB, you need to migrate them for each environ
 Here, you can use Django's fixtures feature. Just do this:
 
 1. Export blurbs
+
 ```
 python manage.py exportdata blurb > blurbs.json  # blurb refers to the name of the Django app
 ```
 
 2. Import blurbs
+
 ```
 python manage.py loaddata blurbs.json
 ```
 
-## Guess What?
+## Code formatting
 
-Ur done. Thank me later.
+Use [`black`](https://black.readthedocs.io/en/stable/installation_and_usage.html).
