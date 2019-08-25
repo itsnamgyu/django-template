@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "base",
     "blurb",
     "carousel",
+    "admin_link",
     "example",
 ]
 
