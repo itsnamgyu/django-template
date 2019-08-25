@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load bootstrap4 %}
+{% load carousel %}
+
+{% block head %}
+<title>django-template Carousel Test</title>
+{% endblock head%}
+
+{% block body %}
+<div class="container">
+  {% carousel 'test_carousel' as test_carousel %}
+  <h2 class="mt-5">Here is a test carousel:</h2>
+  {% if test_carousel.visible %}
+  <div class="w-100" style="height: 32rem;">
+    {{ test_carousel.to_html }}
+  </div>
+  {% else %}
+  <p>Add images to the carousel in the admin console. Note that empty carousels will be hidden by default.</p>
+  {% endif %}
+
+  <a href="{% url 'example:index' %}">
+    <button class="btn btn-primary mt-5">Back</button>
+  </a>
+</div>
+{% endblock body %}
+{% block body_script %}
+{% endblock body_script %}

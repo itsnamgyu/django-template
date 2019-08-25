@@ -11,4 +11,9 @@ urlpatterns = [
         TemplateView.as_view(template_name="example/blurb_test.html"),
         name="blurb_test",
     ),
+    path(
+        "carousel_test",
+        TemplateView.as_view(template_name="example/carousel_test.html"),
+        name="carousel_test",
+    ),
 ]
