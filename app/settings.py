@@ -8,6 +8,7 @@ github.com/itsnamgyu/django-template
 """
 
 import os
+import logging
 
 from django.core.exceptions import ImproperlyConfigured
 
@@ -112,15 +113,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
+# Static files
 STATIC_URL = "/static/"
 if DEBUG:
     static_root = fetch_env("STATIC_ROOT")
@@ -129,13 +127,22 @@ if DEBUG:
 else:
     STATIC_ROOT = require_env("STATIC_ROOT")
 
+# Media files
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+if DEBUG:
+    media_root = fetch_env("MEDIA_ROOT")
+    if media_root:
+        MEDIA_ROOT = media_root
+    else:
+        MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+        logging.info('Using default media root {}'.format(MEDIA_ROOT))
+else:
+    MEDIA_ROOT = require_env("MEDIA_ROOT")
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# The following settings pertain to django-allauth
+# Django Allauth
 """
 Allauth requires some manual setup on your part. Make sure to have a good
 understanding of the basics and the setup process before you start. You can
@@ -181,13 +188,13 @@ if SES_ENABLED:
 
 if MODERN_EMAIL_ENABLED:
     MODERN_EMAIL_STATIC_HOST = require_env("STATIC_HOST")
-    MODERN_EMAIL_LOGO_IMAGE = "example/logo.png"
+    modern_email_logo_image = "example/logo.png"  # TODO change this
     MODERN_EMAIL_CUSTOM_TEMPLATE = None
-    MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"
-    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"
-    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"
-    MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"
-    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"
+    MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"  # TODO change this
+    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"  # TODO change this
+    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"  # TODO change this
+    MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"  # TODO change this
+    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"  # TODO change this
 
 if STRIPE_ENABLED:
     STRIPE_STATIC_HOST = require_env("STATIC_HOST")
