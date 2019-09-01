@@ -1,5 +1,5 @@
 django
-yapf
+black
 django-dotenv
 django-bootstrap4
 django-allauth

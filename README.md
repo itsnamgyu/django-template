@@ -118,3 +118,5 @@ python manage.py loaddata blurbs.json
 ## Code formatting
 
 Use [`black`](https://black.readthedocs.io/en/stable/installation_and_usage.html).
+
+Use `scripts/lint.sh` to auto-format all code.

@@ -9,37 +9,121 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Carousel',
+            name="Carousel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='date created')),
-                ('identifier', models.CharField(max_length=256, verbose_name='identifier')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date_created",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date created"
+                    ),
+                ),
+                (
+                    "identifier",
+                    models.CharField(max_length=256, verbose_name="identifier"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='date created')),
-                ('title', models.CharField(blank=True, max_length=256, null=True, verbose_name='title')),
-                ('image', versatileimagefield.fields.VersatileImageField(height_field='height', upload_to='carousel_image', verbose_name='image', width_field='width')),
-                ('height', models.PositiveIntegerField(blank=True, null=True, verbose_name='image height')),
-                ('width', models.PositiveIntegerField(blank=True, null=True, verbose_name='image width')),
-                ('ppoi', versatileimagefield.fields.PPOIField(default='0.5x0.5', editable=False, max_length=20, verbose_name='image PPOI')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date_created",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date created"
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        blank=True, max_length=256, null=True, verbose_name="title"
+                    ),
+                ),
+                (
+                    "image",
+                    versatileimagefield.fields.VersatileImageField(
+                        height_field="height",
+                        upload_to="carousel_image",
+                        verbose_name="image",
+                        width_field="width",
+                    ),
+                ),
+                (
+                    "height",
+                    models.PositiveIntegerField(
+                        blank=True, null=True, verbose_name="image height"
+                    ),
+                ),
+                (
+                    "width",
+                    models.PositiveIntegerField(
+                        blank=True, null=True, verbose_name="image width"
+                    ),
+                ),
+                (
+                    "ppoi",
+                    versatileimagefield.fields.PPOIField(
+                        default="0.5x0.5",
+                        editable=False,
+                        max_length=20,
+                        verbose_name="image PPOI",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Placement',
+            name="Placement",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='date created')),
-                ('carousel', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='placements', to='carousel.Carousel')),
-                ('image', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='carousel.Image')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date_created",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date created"
+                    ),
+                ),
+                (
+                    "carousel",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="placements",
+                        to="carousel.Carousel",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="carousel.Image"
+                    ),
+                ),
             ],
         ),
     ]
