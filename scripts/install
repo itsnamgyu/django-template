@@ -99,6 +99,12 @@ else
 		<Directory /var/www/${HOST}/static>
 		Require all granted
 		</Directory>
+		
+		Alias /media/ /var/www/${HOST}/media/
+
+		<Directory /var/www/${HOST}/media>
+		Require all granted
+		</Directory>
 
 		<Directory ${PROJECT_DIR}/app>
 		<Files wsgi.py>
