@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 ./scripts/update
-sudo apachectl -k reload
+sudo apachectl -k graceful # restart server gracefully
