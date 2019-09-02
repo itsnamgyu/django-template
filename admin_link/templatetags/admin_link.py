@@ -24,8 +24,11 @@ def admin_link_url(context, instance, action: str):
             )
         )
 
-    app = instance._meta.app_label
-    model = instance._meta.model_name
+    try:
+        app = instance._meta.app_label
+        model = instance._meta.model_name
+    except AttributeError:
+        return None
 
     if not user.has_perm("{}.{}_{}".format(app, action, model)):
         return None
@@ -45,8 +48,12 @@ def admin_link_url(context, instance, action: str):
 @register.simple_tag(takes_context=True)
 def admin_link(context, instance, action: str, label: str = None):
     url = admin_link_url(context, instance, action)
-    app_label = instance._meta.app_label.replace("_", " ")
-    model_name = instance._meta.model_name.replace("_", " ")
+
+    try:
+        app_label = instance._meta.app_label.replace("_", " ")
+        model_name = instance._meta.model_name.replace("_", " ")
+    except AttributeError:
+        return ""
 
     local_context = dict(
         url=url, label=label, app_label=app_label, model_name=model_name
