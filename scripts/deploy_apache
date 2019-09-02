@@ -6,8 +6,8 @@ trap 'exit' ERR
 usage() {
     cat <<EOF
 Usage:
-  install --host=example.com
-  install --help
+  deploy_apache --host=example.com
+  deploy_apache --help
 
 Other Options:
   --apache-config      the location of the 000-default.conf file for wsgi

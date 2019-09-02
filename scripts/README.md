@@ -18,7 +18,7 @@ sudo apt install apache2-dev
 # start at root folder
 source venv/bin/activate # enable virtual environment
 export PROJECT_DIR=`pwd`
-./scripts/install --host=mysite.com
+./scripts/deploy_apache --host=mysite.com
 ```
 
 #### Start apache service
