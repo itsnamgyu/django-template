@@ -86,37 +86,37 @@ if grep -q "ServerName ${HOST}" "${APACHE_CONFIG}"; then
 	echo "Settings already exists in ${APACHE_CONFIG}."
 else
 	echo "<VirtualHost *:80>
-		ServerName ${HOST}
-		ServerAlias www.${HOST}
-		ServerAdmin support@${HOST}
+	ServerName ${HOST}
+	ServerAlias www.${HOST}
+	ServerAdmin support@${HOST}
 
-		# Serving static files
-		Alias /robots.txt /var/www/${HOST}/static/robots.txt
-		Alias /favicon.ico /var/www/${HOST}/static/favicon.ico
+	# Serving static files
+	Alias /robots.txt /var/www/${HOST}/static/robots.txt
+	Alias /favicon.ico /var/www/${HOST}/static/favicon.ico
 
-		Alias /static/ /var/www/${HOST}/static/
+	Alias /static/ /var/www/${HOST}/static/
 
-		<Directory /var/www/${HOST}/static>
-		Require all granted
-		</Directory>
-		
-		Alias /media/ /var/www/${HOST}/media/
+	<Directory /var/www/${HOST}/static>
+	Require all granted
+	</Directory>
+	
+	Alias /media/ /var/www/${HOST}/media/
 
-		<Directory /var/www/${HOST}/media>
-		Require all granted
-		</Directory>
+	<Directory /var/www/${HOST}/media>
+	Require all granted
+	</Directory>
 
-		<Directory ${PROJECT_DIR}/app>
-		<Files wsgi.py>
-		Require all granted
-		</Files>
-		</Directory>
+	<Directory ${PROJECT_DIR}/app>
+	<Files wsgi.py>
+	Require all granted
+	</Files>
+	</Directory>
 
-		LoadModule wsgi_module "${PROJECT_DIR}/venv/lib/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so"
+	LoadModule wsgi_module "${PROJECT_DIR}/venv/lib/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so"
 
-		WSGIDaemonProcess ${HOST} processes=2 threads=15 display-name=%{GROUP} python-path=${PROJECT_DIR} python-home=${PROJECT_DIR}/venv
-		WSGIProcessGroup ${HOST}
+	WSGIDaemonProcess ${HOST} processes=2 threads=15 display-name=%{GROUP} python-path=${PROJECT_DIR} python-home=${PROJECT_DIR}/venv
+	WSGIProcessGroup ${HOST}
 
-		WSGIScriptAlias / ${PROJECT_DIR}/app/wsgi.py
-	</VirtualHost>" | sudo tee -a ${APACHE_CONFIG}
+	WSGIScriptAlias / ${PROJECT_DIR}/app/wsgi.py
+</VirtualHost>" | sudo tee -a ${APACHE_CONFIG}
 fi
