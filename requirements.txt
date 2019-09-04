@@ -3,6 +3,11 @@ black
 django-dotenv
 django-bootstrap4
 django-allauth
+# Amazon SES (Email)
 django-ses
+# Stripe
 stripe
+# Carousel
 django-versatileimagefield
+# Blurb
+django-ckeditor

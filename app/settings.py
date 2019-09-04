@@ -42,11 +42,16 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
-    "versatileimagefield",
     "base",
-    "blurb",
+    # Carousel
+    "versatileimagefield",
     "carousel",
+    # Blurb
+    "blurb",
+    "ckeditor",
+    # Admin link
     "admin_link",
+    # Example
     "example",
 ]
 
@@ -135,12 +140,36 @@ if DEBUG:
         MEDIA_ROOT = media_root
     else:
         MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-        logging.info('Using default media root {}'.format(MEDIA_ROOT))
+        logging.info("Using default media root {}".format(MEDIA_ROOT))
 else:
     MEDIA_ROOT = require_env("MEDIA_ROOT")
 
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
+# Blurb
+CKEDITOR_CONFIGS = {
+    "blurb": {
+        "toolbar": "Custom",
+        "toolbar_Custom": [
+            ["Format"],
+            ["Bold", "Italic", "Underline"],
+            [
+                "NumberedList",
+                "BulletedList",
+                "-",
+                "Outdent",
+                "Indent",
+                "-",
+                "JustifyLeft",
+                "JustifyCenter",
+                "JustifyRight",
+                "JustifyBlock",
+            ],
+            ["Link", "Unlink"],
+        ],
+    }
+}
 
 # Django Allauth
 """
