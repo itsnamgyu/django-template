@@ -6,7 +6,6 @@ from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from admin_link.templatetags.admin_link import admin_link_url
 
-from ..exceptions import BlurbNotFilledException
 from ..models import Blurb
 
 register = template.Library()
@@ -27,14 +26,13 @@ def blurb(context, identifier):
     is_superuser = user and user.is_superuser
     admin_link = admin_link_url(context, blurb, "change")
 
-    if blurb.content == None:
-        if settings.DEBUG:
-            empty_message = EMPTY_BLURB.format(identifier, admin_link)
-            return mark_safe(empty_message)
+    if blurb.content is None:
+        if is_superuser or settings.DEBUG:
+            return mark_safe(EMPTY_BLURB.format(identifier, admin_link))
         else:
-            raise BlurbNotFilledException(identifier)
+            return ""
     else:
         content = blurb.content
         if is_superuser:
-            content = blurb.content + EDIT_LINK.format(admin_link)
+            content = content + EDIT_LINK.format(admin_link)
         return mark_safe(content)
