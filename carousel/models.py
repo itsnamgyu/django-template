@@ -4,6 +4,7 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+
 from versatileimagefield.fields import PPOIField, VersatileImageField
 
 

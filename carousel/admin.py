@@ -5,11 +5,13 @@ from versatileimagefield.fields import SizedImageCenterpointClickDjangoAdminFiel
 from versatileimagefield.widgets import VersatileImagePPOIClickWidget
 from versatileimagefield.fields import VersatileImageField
 
+from admin_link.admin import ModelAdmin
+
 from .models import Carousel, Image, Placement
 
 
 @admin.register(Image)
-class ImageAdmin(admin.ModelAdmin):
+class ImageAdmin(ModelAdmin):
     list_display = ["title", "image"]
     empty_value_display = "unset"
 
@@ -23,7 +25,7 @@ class PlacementInline(admin.TabularInline):
 
 
 @admin.register(Carousel)
-class CarouselAdmin(admin.ModelAdmin):
+class CarouselAdmin(ModelAdmin):
     inlines = [PlacementInline]
     list_display = ["identifier", "date_created", "image_count"]
 
