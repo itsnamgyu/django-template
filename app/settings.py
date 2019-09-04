@@ -217,7 +217,7 @@ if SES_ENABLED:
 
 if MODERN_EMAIL_ENABLED:
     MODERN_EMAIL_STATIC_HOST = require_env("STATIC_HOST")
-    modern_email_logo_image = "example/logo.png"  # TODO change this
+    MODERN_EMAIL_LOGO_IMAGE = "example/logo.png"  # TODO change this
     MODERN_EMAIL_CUSTOM_TEMPLATE = None
     MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"  # TODO change this
     MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"  # TODO change this
