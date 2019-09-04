@@ -40,9 +40,12 @@ def admin_link_url(context, instance, action: str):
     else:
         args = ()
 
-    return reverse(
+    url = reverse(
         url_name, args=args, current_app=context.request.resolver_match.app_name
     )
+    full_url = "{}?admin_link_redirect={}".format(url, context.request.get_full_path())
+
+    return full_url
 
 
 @register.simple_tag(takes_context=True)
