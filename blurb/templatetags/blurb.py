@@ -2,10 +2,11 @@ from django import template
 from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
-from blurb.exceptions import BlurbNotFilledException
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
+from admin_link.templatetags.admin_link import admin_link_url
+
+from ..exceptions import BlurbNotFilledException
 from ..models import Blurb
 
 register = template.Library()
@@ -24,7 +25,7 @@ def blurb(context, identifier):
 
     user = context.request.user
     is_superuser = user and user.is_superuser
-    admin_link = reverse("admin:blurb_blurb_change", args=(blurb.id,))
+    admin_link = admin_link_url(context, blurb, "change")
 
     if blurb.content == None:
         if settings.DEBUG:

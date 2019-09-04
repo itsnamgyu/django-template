@@ -7,6 +7,8 @@ from django.template.defaultfilters import striptags
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 
+from admin_link.admin import ModelAdmin
+
 
 class Blurb(models.Model):
     identifier = models.CharField(max_length=512, unique=True)
@@ -61,7 +63,7 @@ class BlurbFilledFilter(admin.SimpleListFilter):
 
 
 @admin.register(Blurb)
-class BlurbAdmin(admin.ModelAdmin):
+class BlurbAdmin(ModelAdmin):
     list_display = ("identifier", "content_plain", "filled")
     list_filter = (BlurbFilledFilter,)
     ordering = ("identifier",)
