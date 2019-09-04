@@ -1,14 +1,18 @@
 import textwrap
 
-from django.db import models
+from ckeditor.fields import RichTextField
 from django.contrib import admin
+from django.db import models
+from django.template.defaultfilters import striptags
+from django.utils.html import strip_tags
+from django.utils.translation import gettext_lazy as _
 
 
 class Blurb(models.Model):
     identifier = models.CharField(max_length=512, unique=True)
     # A null value indicates that the content has not been set.
     # An empty value would indicate that the blurb is intentionally empty.
-    content = models.TextField("content", "content", blank=True, null=True)
+    content = RichTextField(_("content"), blank=True, null=True, config_name="blurb")
 
     class Meta:
         indexes = [models.Index(fields=["identifier"])]
@@ -22,7 +26,7 @@ class Blurb(models.Model):
             content = "<PLEASE FILL IN THIS BLURB>"
         elif content == "":
             content = "<EMPTY>"
-        content = textwrap.shorten(content, width=80, placeholder="...")
+        content = textwrap.shorten(striptags(content), width=80, placeholder="...")
         return "[{}] {}".format(self.identifier, content)
 
 
@@ -58,11 +62,14 @@ class BlurbFilledFilter(admin.SimpleListFilter):
 
 @admin.register(Blurb)
 class BlurbAdmin(admin.ModelAdmin):
-    list_display = ("identifier", "content", "filled")
+    list_display = ("identifier", "content_plain", "filled")
     list_filter = (BlurbFilledFilter,)
     ordering = ("identifier",)
 
     def filled(self, blurb):
         return blurb.content is not None
+
+    def content_plain(self, blurb):
+        return striptags(blurb.content)
 
     filled.boolean = True
