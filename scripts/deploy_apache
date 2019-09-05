@@ -75,7 +75,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 pip install mod-wsgi
 sudo mkdir -p /var/www/${HOST}
-sudo chown `whoami` /var/www/${HOST}
+sudo chown `whoami`:www-data /var/www/${HOST}
+sudo chmod 770 /var/www/${HOST}
 touch db.sqlite3
 sudo chown www-data db.sqlite3
 sudo chmod g+w db.sqlite3
