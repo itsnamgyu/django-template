@@ -131,6 +131,9 @@ if DEBUG:
         STATIC_ROOT = static_root
 else:
     STATIC_ROOT = require_env("STATIC_ROOT")
+    STATICFILES_STORAGE = (
+        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    )
 
 # Media files
 MEDIA_URL = "/media/"
