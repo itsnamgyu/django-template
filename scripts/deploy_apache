@@ -54,18 +54,20 @@ installation or set the correct path for the config file using the
 fi
 
 # check PROJECT_DIR
-if [ ! -z "${PROJECT_DIR}" ]; then
+if [ -z "${PROJECT_DIR}" ]; then
+	PROJECT_DIR=`pwd`
+	echo "Setting PROJECT_DIR to current directory ${PROJECT_DIR}"
+fi
+
 	if [ -f "${PROJECT_DIR}/app/wsgi.py" ]; then
 		echo "Deploy Django project at \"${PROJECT_DIR}\" for Apache using WSGI."
 		echo -n "Press enter to continue or Ctrl+C to exit..."
 		read
 		echo "Hang on!"
 	else
-		echo "Invalid PROJECT_DIR (\"${PROJECT_DIR}\"). \"\$PROJECT_DIR/app/wsgi.py\" must be a valid file."
-		exit 1
-	fi
-else
-	echo "You must set environment variable PROJECT_DIR (such that \"\$PROJECT_DIR/app/wsgi.py\" is a valid file)"
+	echo "\
+Invalid PROJECT_DIR (\"${PROJECT_DIR}\"). \"\$PROJECT_DIR/app/wsgi.py\" must be a valid file.
+Set PROJECT_DIR to a valid directory or run this script from the root of your project."
 	exit 1
 fi
 
