@@ -33,6 +33,6 @@ def blurb(context, identifier):
             return ""
     else:
         content = blurb.content
-        if is_superuser:
+        if is_superuser or settings.DEBUG:
             content = content + EDIT_LINK.format(admin_link)
         return mark_safe(content)
