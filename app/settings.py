@@ -57,14 +57,17 @@ INSTALLED_APPS = [
     "example",
 ]
 
-SES_ENABLED = fetch_env("SES_ENABLED", "FALSE") == "TRUE"
-MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE") == "TRUE"
-STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE") == "TRUE"
+SES_ENABLED = fetch_env("SES_ENABLED", "FALSE").upper() == "TRUE"
+MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE").upper() == "TRUE"
+STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
+DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 
 if MODERN_EMAIL_ENABLED:
     INSTALLED_APPS.append("modern_email")
 if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
+if DT_STRIPE_ENABLED:
+    INSTALLED_APPS.append("dt_stripe")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -33,5 +33,8 @@ if settings.MODERN_EMAIL_ENABLED:
 if settings.STRIPE_ENABLED:
     urlpatterns.append(path("stripe/", include("django_stripe.urls")))
 
+if settings.DT_STRIPE_ENABLED:
+    urlpatterns.append(path("dt-stripe/", include("dt_stripe.urls")))
+
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
