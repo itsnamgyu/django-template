@@ -27,6 +27,13 @@
     <button class="btn btn-primary mt-2">Carousel Test</button>
   </a>
 
+  {% if dt_stripe %}
+  <h4 class="mt-4">Go to the dt-stripe dashboard</h4>
+  <a href="{% url 'dt-stripe:index' %}">
+    <button class="btn btn-primary mt-2">dt-stripe</button>
+  </a>
+  {% endif %}
+
   <h4 class="mt-4">Test out the admin_link app</h4>
   <p>These are admin links related to users.</p>
   {% if not request.user.is_superuser %}
