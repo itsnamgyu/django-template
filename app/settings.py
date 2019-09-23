@@ -24,6 +24,7 @@ DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 if DJANGO_ENV == "DEV":
     DEBUG = True
     ALLOWED_HOSTS = ["*"]
+    logging.basicConfig(level=logging.DEBUG)
 else:
     DEBUG = False
     ALLOWED_HOSTS = ["*"]  # change this for your real project
