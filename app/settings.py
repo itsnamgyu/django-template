@@ -13,6 +13,7 @@ import logging
 from django.core.exceptions import ImproperlyConfigured
 
 from .env_loader import require_env, fetch_env
+from .logging import PRODUCTION_LOGGING
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -117,6 +118,8 @@ AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.google.GoogleOAuth2',  # uncomment for Google signin
     # 'social_core.backends.facebook.FacebookOAuth2',  # uncomment for Facebook signin
 )
+
+LOGGING = PRODUCTION_LOGGING
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
