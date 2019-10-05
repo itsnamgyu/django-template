@@ -2,6 +2,12 @@
 
 Newer Stripe integration for the Django Template project, supporting token-based payments and subscriptions.
 
+### Usage
+
+- Copy Stripe API keys to `.env`.
+- Enable webhooks to endpoint `<dt-stripe url base>/webhooks`, or `https://mysite.com/dt-stripe/webhooks` by default.
+  - As of Oct 5th, 2019, we don't have any webhooks enabled.
+
 ### Products, Plans, SKUs
 
 These can be created from dt_stripe. There is an option to fetch ALL objects from Stripe.
