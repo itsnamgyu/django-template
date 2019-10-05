@@ -13,7 +13,7 @@ import logging
 from django.core.exceptions import ImproperlyConfigured
 
 from .env_loader import require_env, fetch_env
-from .logging import PRODUCTION_LOGGING
+from .logging_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -96,6 +96,8 @@ TEMPLATES = [
         },
     }
 ]
+
+LOGGING = PRODUCTION_LOGGING
 
 WSGI_APPLICATION = "app.wsgi.application"
 

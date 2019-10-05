@@ -1,4 +1,4 @@
-# Logs errors even when DEBUG=False
+# Logs errors to console in production mode
 PRODUCTION_LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
