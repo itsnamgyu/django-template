@@ -25,12 +25,26 @@ DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 if DJANGO_ENV == "DEV":
     DEBUG = True
     ALLOWED_HOSTS = ["*"]
-    logging.basicConfig(level=logging.DEBUG)
 else:
     DEBUG = False
     ALLOWED_HOSTS = ["*"]  # change this for your real project
 
 SECRET_KEY = require_env("SECRET_KEY")
+
+# Logging (Django generated logs)
+LOGGING = PRODUCTION_LOGGING
+
+# Logging (User generated logs via `logging.log()`)
+if DJANGO_ENV == "DEV":
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.INFO)
+
+# Override logging level
+LOGGING_LEVEL = fetch_env("LOGGING_LEVEL")
+if LOGGING_LEVEL:
+    logging.info("Setting logging level for user logs to {}".format(LOGGING_LEVEL))
+    logging.basicConfig(level=LOGGING_LEVEL)
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -96,8 +110,6 @@ TEMPLATES = [
         },
     }
 ]
-
-LOGGING = PRODUCTION_LOGGING
 
 WSGI_APPLICATION = "app.wsgi.application"
 
@@ -235,7 +247,7 @@ if MODERN_EMAIL_ENABLED:
     MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"  # TODO change this
     MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"  # TODO change this
 
-if STRIPE_ENABLED:
+if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_STATIC_HOST = require_env("STATIC_HOST")
     STRIPE_PUBLIC_KEY = require_env("STRIPE_PUBLIC_KEY")
     STRIPE_SECRET_KEY = require_env("STRIPE_SECRET_KEY")
