@@ -1,12 +1,43 @@
-## DT-STRIPE
+# DT-STRIPE
 
 Newer Stripe integration for the Django Template project, supporting token-based payments and subscriptions.
 
-### Usage
+## Usage
 
 - Copy Stripe API keys to `.env`.
 - Enable webhooks to endpoint `<dt-stripe url base>/webhooks`, or `https://mysite.com/dt-stripe/webhooks` by default.
   - As of Oct 5th, 2019, we don't have any webhooks enabled.
+
+### Template Tags (All-In-One)
+
+Can use when there is only one Stripe Card Element on the page.
+
+```html
+{% load dt_stripe %}
+
+<form id="form-id">
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element-id" class="w-100"></div>
+    <div id="card-errors-id" role="alert"></div>
+  </div>
+</form>
+
+{% dt_stripe 'form-id' 'card-element-id' 'card-errors-id' %}
+```
+
+### Template Tags (Standard)
+
+Must use when there are more than one Stripe Card Elements on the page.
+
+```
+{% dt_stripe_init %}
+{% dt_stripe_mount_card_element 'form-id' 'card-element-id' 'card-errors-id' %}
+```
+
+## Objects
 
 ### Products, Plans, SKUs
 
