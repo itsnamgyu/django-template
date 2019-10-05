@@ -1,7 +1,8 @@
 {% extends 'dt_stripe/base.html' %}
 
-{% load bootstrap4 %}
 {% load static %}
+{% load bootstrap4 %}
+{% load dt_stripe %}
 
 {% block head %}
 {% endblock head %}
@@ -101,6 +102,6 @@
 {% endblock body %}
 
 {% block body_script %}
-<script src="https://js.stripe.com/v3/"></script>
-<script src="{% static 'dt_stripe/js/payment.js' %}"> </script>
+{% dt_stripe_init %}
+{% dt_stripe_mount_card_element 'order-form' 'card-element' 'card-errors' %}
 {% endblock body_script %}
