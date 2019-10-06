@@ -9,10 +9,10 @@
   {% include 'dt_stripe/snippets/object_list.html'%}
   <div class="row my-5">
     <div class="col-12 col-md-11 col-lg-10 col-xl-8">
-      <h1>Product List</h1>
+      <h3>Product List</h3>
       {% for product in product_list %}
       <div class="card">
-        <h2>{{ product.name }}</h2>
+        <h4>{{ product.name }}</h4>
         {% if product.description %}
         <p>{{ product.description }}</p>
         {% endif %}

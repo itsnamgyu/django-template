@@ -14,14 +14,14 @@
       <a href="{% url 'dt-stripe:customer-list' %}" class="btn btn-link">
         <i class="fas fa-chevron-left mr-2"></i>Back
       </a>
-      <h1>Customer: {{ customer.name }}</h1>
+      <h2>Customer: {{ customer.name }}</h2>
       {% if customer.description %}
       <p>{{ customer.description }}</p>
       {% endif %}
       <p>Source status: {{ customer.get_source_status_display }}</p>
     </div>
     <div class="col-12 col-md-6 mb-4">
-      <h2>Place order</h2>
+      <h3>Place order</h3>
 
       {% if order_success %}
       <div class="alert alert-primary">
@@ -43,7 +43,7 @@
           <label for="card-element">
             Credit or debit card
           </label>
-          <div id="card-element" class="w-100">
+          <div id="card-element" class="mb-3 w-100">
           </div>
           <div id="card-errors" role="alert">
           </div>
@@ -54,7 +54,7 @@
     </div>
 
     <div class="col-12 col-md-6 mb-4">
-      <h2>Subscribe</h2>
+      <h3>Subscribe</h3>
 
       {% if subscribe_success %}
       <div class="alert alert-primary">
@@ -77,7 +77,7 @@
     </div>
 
     <div class="col-12 col-md-6 mb-4">
-      <h2>Unsubscribe</h2>
+      <h3>Unsubscribe</h3>
 
       {% if unsubscribe_success %}
       <div class="alert alert-primary">

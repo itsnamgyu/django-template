@@ -15,15 +15,13 @@ Can use when there is only one Stripe Card Element on the page.
 ```html
 {% load dt_stripe %}
 
-<form id="form-id">
-  <div class="form-row">
-    <label for="card-element">
-      Credit or debit card
-    </label>
-    <div id="card-element-id" class="w-100"></div>
-    <div id="card-errors-id" role="alert"></div>
-  </div>
-</form>
+<div class="form-row">
+  <label for="card-element">
+    Credit or debit card
+  </label>
+  <div id="card-element" class="mb-3 w-100"></div>
+  <div id="card-errors" role="alert"></div>
+</div>
 
 {% dt_stripe 'form-id' 'card-element-id' 'card-errors-id' %}
 ```

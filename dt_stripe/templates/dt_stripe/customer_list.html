@@ -9,11 +9,11 @@
   {% include 'dt_stripe/snippets/object_list.html'%}
   <div class="row my-5">
     <div class="col-12 col-md-11 col-lg-10 col-xl-8">
-      <h1>Customer List</h1>
+      <h3>Customer List</h3>
       {% for customer in customer_list %}
       <div class="card">
         <a href="{% url 'dt-stripe:customer-detail' customer.id %}" class="text-decoration-none">
-          <h2>{{ customer.name }}</h2>
+          <h4>{{ customer.name }}</h4>
           {% if customer.description %}
           <p>{{ customer.description }}</p>
           {% endif %}
