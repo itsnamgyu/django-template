@@ -3,6 +3,8 @@ black
 django-dotenv
 django-bootstrap4
 django-allauth
+# Live reload for development
+django-livesync
 # Amazon SES (Email)
 django-ses
 # Stripe

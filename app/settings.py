@@ -76,6 +76,9 @@ MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE").upper() == "TR
 STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 
+if DEBUG:
+    # Live reload for development
+    INSTALLED_APPS.insert(0, "livesync")
 if MODERN_EMAIL_ENABLED:
     INSTALLED_APPS.append("modern_email")
 if STRIPE_ENABLED:
@@ -92,6 +95,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if DEBUG:
+    # Live reload for development
+    MIDDLEWARE.append("livesync.core.middleware.DjangoLiveSyncMiddleware")
 
 ROOT_URLCONF = "app.urls"
 
