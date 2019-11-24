@@ -3,6 +3,7 @@ black
 django-dotenv
 django-bootstrap4
 django-allauth
+django-debug-toolbar
 # Live reload for development
 django-livesync
 # Amazon SES (Email)

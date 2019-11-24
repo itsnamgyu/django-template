@@ -37,4 +37,8 @@ if settings.DT_STRIPE_ENABLED:
     urlpatterns.append(path("dt-stripe/", include("dt_stripe.urls")))
 
 if settings.DEBUG:
+    import debug_toolbar
+
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+    urlpatterns.extend([path("__debug__/", include(debug_toolbar.urls))])
+
