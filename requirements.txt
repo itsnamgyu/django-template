@@ -1,6 +1,7 @@
 django
 black
 pylint
+pylint-django
 django-dotenv
 django-bootstrap4
 django-allauth
