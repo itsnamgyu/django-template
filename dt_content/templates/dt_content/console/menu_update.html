@@ -21,7 +21,7 @@
     </div>
     <h2 class="mt-0">{{ menu.title }}</h2>
   </div>
-  <form method="post" class="mb-5">
+  <form action="{{ request.path }}" method="post" class="mb-5">
     {% csrf_token %}
     {% include "dt_content/snippets/menu_form_row.html" %}
     <a href="{% url 'dt-content:menu-delete' menu.id %}" class="btn btn-danger">Delete</a>

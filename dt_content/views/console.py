@@ -26,10 +26,8 @@ class MenuListView(StaffMemberRequiredMixin, ListView):
 
 
 class MenuCreateView(StaffMemberRequiredMixin, CreateView):
-    queryset = Menu.objects.filter(parent=None)
-    context_object_name = "menu_list"
+    form_class = MenuForm
     template_name = "dt_content/console/menu_create.html"
-    fields = ["title", "url_slug", "disabled", "redirect_to"]
 
     def get_success_url(self):
         next_url = self.request.GET.get("next", None)
@@ -42,7 +40,7 @@ class MenuCreateView(StaffMemberRequiredMixin, CreateView):
 
 class MenuUpdateView(StaffMemberRequiredMixin, UpdateView):
     model = Menu
-    fields = ["title", "url_slug", "disabled", "redirect_to"]
+    form_class = MenuForm
     slug_field = "id"
     context_object_name = "menu"
     template_name = "dt_content/console/menu_update.html"
@@ -60,8 +58,7 @@ class MenuUpdateView(StaffMemberRequiredMixin, UpdateView):
 
 
 class SubmenuCreateView(StaffMemberRequiredMixin, CreateView):
-    model = Menu
-    form_class = SubmenuCreateForm
+    form_class = SubmenuForm
     template_name = "dt_content/console/submenu_create.html"
 
     def setup(self, request, *args, **kwargs):
@@ -95,7 +92,7 @@ class SubmenuCreateView(StaffMemberRequiredMixin, CreateView):
 
 class SubmenuUpdateView(StaffMemberRequiredMixin, UpdateView):
     model = Menu
-    fields = ["title", "url_slug", "disabled", "redirect_to"]
+    form_class = SubmenuForm
     slug_field = "id"
     context_object_name = "menu"
     template_name = "dt_content/console/submenu_update.html"

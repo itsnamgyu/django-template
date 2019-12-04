@@ -2,7 +2,9 @@ from abc import abstractmethod
 
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.apps import apps
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.query_utils import Q
 from django.urls import reverse
 from django.utils.decorators import classproperty
 from django.utils.text import camel_case_to_spaces
@@ -16,29 +18,46 @@ class Menu(models.Model):
     parent = models.ForeignKey(
         "self", related_name="children", on_delete=models.CASCADE, null=True, blank=True
     )
-    content_section = models.OneToOneField(
-        "ContentSection",
-        related_name="menu",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
     # User will be redirected if redirect link is set
     redirect_to = models.URLField(null=True, blank=True)
 
     class Meta:
         order_with_respect_to = "parent"
         indexes = [models.Index(fields=["parent", "url_slug"])]
-        unique_together = [["parent", "url_slug"]]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["url_slug"],
+                condition=Q(parent__isnull=True),
+                name="unique_parent_url_slug",
+            ),
+            models.UniqueConstraint(
+                fields=["parent", "url_slug"], name="unique_child_url_slug"
+            ),
+        ]
+
+    def validate_unique(self, exclude=None):
+        super().validate_unique(exclude)
+
+        # Validate the partial UniqueConstrain (unique_parent_url_slug)
+        # manually
+        if self.parent is None and self.url_slug is not None:
+            if (
+                Menu.objects.filter(parent=None, url_slug=self.url_slug)
+                .exclude(pk=self.pk)
+                .exists()
+            ):
+                raise ValidationError("A menu with the same url already exists")
+
+    def unique_error_message(self, model_class, unique_check):
+        if model_class == type(self) and unique_check == ("parent", "url_slug"):
+            return "A submenu with the same url already exists"
+        else:
+            return super().unique_error_message(model_class, unique_check)
 
     def get_content_section(self):
         ContentSection = apps.get_model("dt_content", "ContentSection")
-        if not self.content_section:
-            content_section = ContentSection()
-            content_section.save()
-            self.content_section = content_section
-            self.save()
-        return self.content_section
+        content_section, created = ContentSection.objects.get_or_create(menu=self)
+        return content_section
 
     def save(self, *args, **kwargs):
         if self.parent and self.children.exists():
@@ -87,17 +106,24 @@ class ContentSection(models.Model):
     # Saves the url where the ContentSection was first initiated
     static_location = models.URLField(null=True)
 
+    menu = models.OneToOneField(
+        Menu,
+        related_name="content_section",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+
     objects = models.Manager()
     static_objects = StaticContentSectionManager()
 
     def __str__(self):
-        try:
-            menu = self.menu
-            if menu.parent:
-                return "{} > {}".format(menu.parent.title, menu.title)
+        if self.menu:
+            if self.menu.parent:
+                return "{} > {}".format(self.menu.parent.title, self.menu.title)
             else:
-                return "{}".format(menu.title)
-        except Menu.DoesNotExist as e:
+                return "{}".format(self.menu.title)
+        else:
             return "{}".format(self.key)
 
     @property

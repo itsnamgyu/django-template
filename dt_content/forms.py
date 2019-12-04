@@ -3,8 +3,24 @@ from django import forms
 from .models import *
 
 
-class SubmenuCreateForm(forms.ModelForm):
-    parent = forms.ModelChoiceField(Menu.objects.filter(parent=None), disabled=True)
+class MenuForm(forms.ModelForm):
+    parent = forms.ModelChoiceField(
+        Menu.objects.filter(parent=None),
+        disabled=True,
+        required=False,
+        initial=None,
+        widget=forms.HiddenInput(),
+    )
+
+    class Meta:
+        fields = ["title", "url_slug", "disabled", "redirect_to", "parent"]
+        model = Menu
+
+
+class SubmenuForm(forms.ModelForm):
+    parent = forms.ModelChoiceField(
+        Menu.objects.filter(parent=None), disabled=True, widget=forms.HiddenInput()
+    )
 
     class Meta:
         fields = ["title", "url_slug", "disabled", "redirect_to", "parent"]
