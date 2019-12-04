@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     "ckeditor",
     # Admin link
     "admin_link",
+    # dt-content
+    "ckeditor_uploader",
     # Example
     "example",
 ]
@@ -76,6 +78,7 @@ SES_ENABLED = fetch_env("SES_ENABLED", "FALSE").upper() == "TRUE"
 MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE").upper() == "TRUE"
 STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
+DT_CONTENT_ENABLED = fetch_env("DT_CONTENT_ENABLED", "FALSE").upper() == "TRUE"
 
 if DEBUG:
     # Live reload for development
@@ -86,6 +89,8 @@ if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
 if DT_STRIPE_ENABLED:
     INSTALLED_APPS.append("dt_stripe")
+if DT_CONTENT_ENABLED:
+    INSTALLED_APPS.append("dt_content")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -182,7 +187,29 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 # Blurb
+CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
 CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "Default",
+        "toolbar_Default": [
+            ["Format"],
+            ["Bold", "Italic", "Underline"],
+            [
+                "NumberedList",
+                "BulletedList",
+                "-",
+                "Outdent",
+                "Indent",
+                "-",
+                "JustifyLeft",
+                "JustifyCenter",
+                "JustifyRight",
+                "JustifyBlock",
+            ],
+            ["Link", "Unlink"],
+            ["Table", "Image"],
+        ],
+    },
     "blurb": {
         "toolbar": "Custom",
         "toolbar_Custom": [
@@ -202,7 +229,7 @@ CKEDITOR_CONFIGS = {
             ],
             ["Link", "Unlink"],
         ],
-    }
+    },
 }
 
 # Django Allauth
