@@ -1,0 +1,37 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    {% if dt_content_preview_mode %}
+    <a class="navbar-brand nav-title" href="{% url 'dt-content:example-site-index' %}?dt_content_preview_mode=true">
+      Example Site (Preview Mode)
+    </a>
+    {% else %}
+    <a class="navbar-brand nav-title" href="{% url 'dt-content:example-site-index' %}">
+      Example Site
+    </a>
+    {% endif %}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        {% for menu in nav_menu_list %}
+        {% if not menu.disabled %}
+        <li class="nav-item">
+          <a class="nav-link {% if menu.active %}active{% endif %}" href="{{ menu.href }}">{{ menu.title }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if request.user.is_staff and not dt_content_preview_mode %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dt-content:menu-create' %}?next={{ request.path }}">
+            <i class="fas fa-cog"></i> Add Menu
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
