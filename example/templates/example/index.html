@@ -17,20 +17,27 @@
   <p>{{ messages }}</p>
   {% endif %}
 
-  <h4 class="mt-4">Test out the blurb app</h4>
-  <a href="{% url 'example:blurb_test' %}">
+  <h4 class="mt-4">blurb</h4>
+  <a href="{% url 'example:blurb-test' %}">
     <button class="btn btn-primary mt-2">Blurb Test</button>
   </a>
 
-  <h4 class="mt-4">Test out the carousel app</h4>
-  <a href="{% url 'example:carousel_test' %}">
+  <h4 class="mt-4">carousel</h4>
+  <a href="{% url 'example:carousel-test' %}">
     <button class="btn btn-primary mt-2">Carousel Test</button>
   </a>
 
   {% if dt_stripe %}
-  <h4 class="mt-4">Go to the dt-stripe dashboard</h4>
+  <h4 class="mt-4">dt-stripe</h4>
   <a href="{% url 'dt-stripe:index' %}">
-    <button class="btn btn-primary mt-2">dt-stripe</button>
+    <button class="btn btn-primary mt-2">Admin Console</button>
+  </a>
+  {% endif %}
+
+  {% if dt_content %}
+  <h4 class="mt-4">dt-content</h4>
+  <a href="{% url 'dt-content:index' %}" class="btn btn-primary mt-2">
+    Admin Console
   </a>
   {% endif %}
 
