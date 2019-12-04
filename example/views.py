@@ -1,5 +1,6 @@
+import random
+
 from django.apps import apps
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
@@ -8,6 +9,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["dt_content"] = apps.is_installed("dt_content")
         context["dt_stripe"] = apps.is_installed("dt_stripe")
         return context
 
