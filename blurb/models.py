@@ -15,6 +15,7 @@ class Blurb(models.Model):
     # A null value indicates that the content has not been set.
     # An empty value would indicate that the blurb is intentionally empty.
     content = RichTextField(_("content"), blank=True, null=True, config_name="blurb")
+    plain = models.BooleanField(null=False, default=False, editable=False)
 
     class Meta:
         indexes = [models.Index(fields=["identifier"])]
@@ -24,7 +25,7 @@ class Blurb(models.Model):
 
     def __str__(self):
         content = self.content
-        if content == None:
+        if content is None:
             content = "<PLEASE FILL IN THIS BLURB>"
         elif content == "":
             content = "<EMPTY>"
