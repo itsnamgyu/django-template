@@ -18,8 +18,6 @@ def get_nav_menu_list(base_url, request_path=None, preview_mode=False):
             # TODO comparing request_path with redirect url (which may or may not be a full URL)
             active = request_path and request_path.find(href) == 0
 
-            if preview_mode:  # TODO change for multiple query params
-                href += "?dt_content_preview_mode=true"
             menu_dict[menu.id] = dict(
                 id=menu.id,
                 title=menu.title,
@@ -38,8 +36,7 @@ def get_nav_menu_list(base_url, request_path=None, preview_mode=False):
             else:
                 # TODO may not be appropriate to use os.path.join
                 href = os.path.join(base_url, parent_dict["href"], menu.url_slug)
-            if preview_mode:  # TODO change for multiple query params
-                href += "?dt_content_preview_mode=true"
+
             # TODO comparing request_path with redirect url (which may or may not be a full URL)
             active = request_path and request_path.find(href) == 0
             parent_dict["children"].append(
@@ -52,5 +49,12 @@ def get_nav_menu_list(base_url, request_path=None, preview_mode=False):
                     disabled=menu.disabled,
                 )
             )
+
+    # Add preview param to href
+    if preview_mode:  # TODO change for multiple query params
+        for parent in menu_dict.values():
+            parent["href"] += "?dt_content_preview_mode=true"
+            for child in parent["children"]:
+                child["href"] += "?dt_content_preview_mode=true"
 
     return list(menu_dict.values())
