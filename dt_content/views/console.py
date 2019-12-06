@@ -154,11 +154,17 @@ class ContentSectionDeleteView(StaffMemberRequiredMixin, DeleteView):
     context_object_name = "content_section"
     template_name = "dt_content/console/content_section_delete.html"
 
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.next_url = self.request.GET.get("next", None)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["next_url"] = self.next_url or self.object.console_list_url
+        return context
+
     def get_success_url(self):
-        next_url = self.request.GET.get("next", None)
-        if next_url:
-            return next_url
-        return self.object.console_list_url + "?delete_success=true"
+        return (self.next_url or self.object.console_list_url) + "?delete_success=True"
 
 
 class ContentBlockListView(StaffMemberRequiredMixin, ListView):
@@ -173,8 +179,17 @@ class ContentBlockDeleteView(StaffMemberRequiredMixin, DeleteView):
     context_object_name = "content_block"
     template_name = "dt_content/console/content_block_delete.html"
 
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.next_url = self.request.GET.get("next", None)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["next_url"] = self.next_url or self.object.console_list_url
+        return context
+
     def get_success_url(self):
-        return self.object.console_list_url + "?delete_success=true"
+        return (self.next_url or self.object.console_list_url) + "?delete_success=True"
 
 
 class ContentBlockUpdateView(StaffMemberRequiredMixin, UpdateView):  # Abstract class
