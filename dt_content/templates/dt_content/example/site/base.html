@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
   <link rel="stylesheet" href="{% static 'dt_content/css/base.css' %}">
-  <link rel="stylesheet" href="{% static 'dt_content/css/console.css' %}">
+  <link rel="stylesheet" href="{% static 'dt_content/css/styles.css' %}">
 
   {% block head %}
   {% endblock head%}
@@ -40,14 +40,6 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <div class="container pt-5">
-    <a href="{% url 'dt-content:index' %}" class="text-decoration-none">
-      <h1 class="mb-1">dt-content</h1>
-    </a>
-    <p>A highly opinionated, simple CMS. By Namgyu Ho (its@namgyu.io).</p>
-    <hr>
-  </div>
-
   {% block body %}
   {% endblock body %}
 

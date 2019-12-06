@@ -1,10 +1,9 @@
-{% extends 'base/base.html' %}
+{% extends 'dt_content/example/site/base.html' %}
 {% load static %}
 {% load dt_content %}
 
 {% block head %}
 <title>django-template</title>
-<link rel="stylesheet" href="{% static 'dt_content/css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'dt_content/css/example/styles.css' %}">
 <link rel="stylesheet" href="{% static 'dt_content/css/example/navbar.css' %}">
 <link rel="stylesheet" href="{% static 'dt_content/css/example/header.css' %}">
@@ -40,7 +39,8 @@
 {% if nav_menu.children  %}
 <div class="py-4 border-bottom">
   <div class="container">
-    <h2>{{ nav_menu.title }}</h2>
+    <!--<h2>{{ nav_menu.title }}</h2>-->
+    <h2>Submenus</h2>
     {% for child in nav_menu.children %}
     <a href="{{ child.href }}" class="submenu-link">
       <i class="fas fa-chevron-circle-right"> </i>

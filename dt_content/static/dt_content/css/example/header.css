@@ -67,7 +67,7 @@
 
 @media (min-width: 350px) {
   .header {
-    height: 16rem;
+    height: 14rem;
   }
 
   .header-lg {
@@ -76,7 +76,7 @@
 
   .header-title {
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 
