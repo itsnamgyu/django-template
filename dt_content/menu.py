@@ -50,11 +50,4 @@ def get_nav_menu_list(base_url, request_path=None, preview_mode=False):
                 )
             )
 
-    # Add preview param to href
-    if preview_mode:  # TODO change for multiple query params
-        for parent in menu_dict.values():
-            parent["href"] += "?dt_content_preview_mode=true"
-            for child in parent["children"]:
-                child["href"] += "?dt_content_preview_mode=true"
-
     return list(menu_dict.values())

@@ -39,11 +39,13 @@
       <div class="row">
         <div class="col-12 col-sm-6">
           {% if dt_content_preview_mode %}
-          <a href="{{ request.path }}" class="btn btn-light btn-block">
+          <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}"
+            class="btn btn-light btn-block">
             Exit Preview Mode
           </a>
           {% else %}
-          <a href="{{ request.path }}?dt_content_preview_mode=true" class="btn btn-light btn-block">
+          <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}"
+            class="btn btn-light btn-block">
             View in Preview Mode
           </a>
           {% endif %}

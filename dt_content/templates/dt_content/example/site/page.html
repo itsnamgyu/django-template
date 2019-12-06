@@ -51,9 +51,12 @@
 </div>
 {% endif %}
 
-{% if not nav_menu.parent and request.user.is_staff and not dt_content_preview_mode %}
+{% if request.user.is_staff %}
+{# Show these options even in preview mode #}
 <div class="py-4 border-bottom">
   <div class="container">
+    <h3>Admin Options</h3>
+    {% if not nav_menu.parent %}
     <a href="{% url 'dt-content:submenu-create' %}?parent={{ nav_menu.id }}" class="submenu-link">
       <i class="fas fa-cog"> </i>
       Add Submenu
@@ -62,6 +65,25 @@
       <i class="fas fa-cog"> </i>
       Manage Menu
     </a>
+
+    {% else %}
+    <a href="{% url 'dt-content:submenu-update' nav_menu.id %}" class="submenu-link">
+      <i class="fas fa-cog"> </i>
+      Manage Submenu
+    </a>
+    {% endif %}
+
+    {% if dt_content_preview_mode %}
+    <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}" class="submenu-link">
+      <i class="fas fa-eye"> </i>
+      Exit Preview Mode
+    </a>
+    {% else %}
+    <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}" class="submenu-link">
+      <i class="fas fa-eye"> </i>
+      View in Preview Mode
+    </a>
+    {% endif %}
   </div>
 </div>
 {% endif %}

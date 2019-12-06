@@ -2,15 +2,13 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <div class="container">
-    {% if dt_content_preview_mode %}
-    <a class="navbar-brand nav-title" href="{% url 'dt-content:example-site-index' %}?dt_content_preview_mode=true">
-      Example Site (Preview)
-    </a>
-    {% else %}
     <a class="navbar-brand nav-title" href="{% url 'dt-content:example-site-index' %}">
+      {% if dt_content_preview_mode %}
+      Example Site (Preview)
+      {% else %}
       Example Site
+      {% endif %}
     </a>
-    {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>

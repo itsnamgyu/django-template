@@ -3,6 +3,7 @@ import logging
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.views import View
 
 
 class SuperUserRequiredMixin(UserPassesTestMixin):
@@ -41,4 +42,4 @@ class PreviewModeMixin:
                     "PreviewMixin.get_preview_mode called before self.request has been set"
                 )
                 return False
-        return request.GET.get("dt_content_preview_mode") == "true"
+        return request.session.get("dt_content_preview_mode", False)

@@ -14,7 +14,8 @@
   <div>
     <div class="d-flex">
       <p class="m-0">You are currently in preview mode.</p>
-      <a href="{{ request.path }}" class="ml-auto">Exit Preview Mode</a>
+      <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}" class="ml-auto">Exit
+        Preview Mode</a>
     </div>
   </div>
   {% else %}
@@ -23,7 +24,8 @@
       <p class="m-0">You are currently viewing this rich text block as an admin. Only admins will see the editor
         controls
         below.</p>
-      <a href="{{ request.path }}?dt_content_preview_mode=true" class="ml-auto">View in Preview Mode</a>
+      <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}" class="ml-auto">View in
+        Preview Mode</a>
     </div>
   </div>
   {% endif %}
