@@ -1,7 +1,7 @@
 {# Context Variables #}
 {# blurb: Blurb #}
 
-<div id="{{ blurb.html_id }}"></div>
+<span id="{{ blurb.html_id }}"></span>
 {% if request.user.is_superuser and not dt_content_preview_mode %}
 {% if blurb.plain_text %}
 <a href=" {% url 'dt-content:blurb-update' blurb.id %}?location={{ request.path }}&next={{ request.path }}"
