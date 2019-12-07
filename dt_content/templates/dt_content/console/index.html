@@ -15,18 +15,24 @@
       <a href="{% url 'dt-content:content-block-list' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
         Static Blocks: {{ static_block_count }}
       </a>
+      <a href="{% url 'dt-content:blurb-list' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
+        Blurbs: {{ blurb_count }}
+      </a>
     </div>
 
     <!-- EXAMPLES -->
     <div class="col-12 col-md-5">
+      <a href="{% url 'dt-content:example-site-index' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
+        Site Example
+      </a>
       <a href="{% url 'dt-content:example-section' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
         Static Section Example
       </a>
       <a href="{% url 'dt-content:example-block' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
         Static Block Example
       </a>
-      <a href="{% url 'dt-content:example-site-index' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
-        Site Example
+      <a href="{% url 'dt-content:example-blurb' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
+        Blurb Example
       </a>
     </div>
   </div>

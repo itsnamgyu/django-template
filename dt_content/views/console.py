@@ -16,6 +16,7 @@ class IndexView(StaffMemberRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["static_section_count"] = ContentSection.static_objects.count()
         context["static_block_count"] = ContentBlock.static_objects.count()
+        context["blurb_count"] = Blurb.objects.count()
         return context
 
 
@@ -130,7 +131,7 @@ class MenuDeleteView(StaffMemberRequiredMixin, DeleteView):
 
 class ContentSectionListView(StaffMemberRequiredMixin, ListView):
     # Only lists static sections
-    queryset = ContentSection.objects.filter(menu=None)
+    queryset = ContentSection.static_objects
     context_object_name = "content_section_list"
     template_name = "dt_content/console/content_section_list.html"
 
@@ -237,6 +238,25 @@ class ContentBlockCreateView(StaffMemberRequiredMixin, CreateView):
             return next_url
 
         return self.object.console_list_url
+
+
+class BlurbListView(StaffMemberRequiredMixin, ListView):
+    queryset = Blurb.objects.order_by("last_known_location", "identifier")
+    context_object_name = "blurb_list"
+    template_name = "dt_content/console/blurb_list.html"
+
+
+class BlurbUpdateView(StaffMemberRequiredMixin, UpdateView):
+    model = Blurb
+    form_class = BlurbForm
+    slug_field = "id"
+    context_object_name = "blurb"
+    template_name = "dt_content/console/blurb_update.html"
+
+    def get_success_url(self):
+        next_url = self.request.GET.get("next", None)
+        url = next_url or reverse("dt-content:blurb-list")
+        return url + "?success=true"
 
 
 class RichTextBlockUpdateView(ContentBlockUpdateView):

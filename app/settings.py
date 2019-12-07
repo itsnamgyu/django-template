@@ -10,8 +10,6 @@ github.com/itsnamgyu/django-template
 import os
 import logging
 
-from django.core.exceptions import ImproperlyConfigured
-
 from .env_loader import require_env, fetch_env
 from .logging_settings import *
 
@@ -63,12 +61,10 @@ INSTALLED_APPS = [
     # Carousel
     "versatileimagefield",
     "carousel",
-    # Blurb
-    "blurb",
-    "ckeditor",
     # Admin link
     "admin_link",
     # dt-content
+    "ckeditor",
     "ckeditor_uploader",
     # Example
     "example",
@@ -186,7 +182,7 @@ else:
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# Blurb
+# Dt Content
 CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
 CKEDITOR_CONFIGS = {
     "default": {

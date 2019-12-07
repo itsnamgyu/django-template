@@ -1,4 +1,4 @@
-.dt-content-outline {
+.dt-content-example-outline {
   outline: 1px solid red;
 }
 
@@ -50,4 +50,13 @@
   font-weight: 500;
   margin-bottom: 1rem;
   color: #aaa;
+}
+
+.dt-content-blurb-update-link {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.dt-content-blurb-inline-update-link {
+  color: inherit;
 }

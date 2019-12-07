@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingFormField
 from django import forms
 
 from .models import *
@@ -23,8 +24,8 @@ class SubmenuForm(forms.ModelForm):
     )
 
     class Meta:
-        fields = ["title", "url_slug", "disabled", "redirect_to", "parent"]
         model = Menu
+        fields = ["title", "url_slug", "disabled", "redirect_to", "parent"]
 
 
 class RichTextBlockCreateForm(forms.ModelForm):
@@ -33,5 +34,20 @@ class RichTextBlockCreateForm(forms.ModelForm):
     )
 
     class Meta:
-        fields = ["content", "section"]
         model = RichTextBlock
+        fields = ["content", "section"]
+
+
+class BlurbForm(forms.ModelForm):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if "instance" in kwargs and kwargs["instance"].plain_text:
+            self.fields["content"] = forms.CharField(
+                widget=forms.Textarea(attrs=dict(rows=3))
+            )
+        else:
+            self.fields["content"] = RichTextUploadingFormField()
+
+    class Meta:
+        model = Blurb
+        fields = ["content"]

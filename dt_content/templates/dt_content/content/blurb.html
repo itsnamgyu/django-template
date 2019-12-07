@@ -1,0 +1,43 @@
+{# Context Variables #}
+{# blurb: Blurb #}
+
+<div id="{{ blurb.html_id }}"></div>
+{% if request.user.is_superuser and not dt_content_preview_mode %}
+{% if blurb.plain_text %}
+<a href=" {% url 'dt-content:blurb-update' blurb.id %}?location={{ request.path }}&next={{ request.path }}"
+  class="dt-content-blurb-inline-update-link">
+  {% if blurb.content %}
+  <i class="fas fa-edit"></i>
+  {{ blurb.content|linebreaksbr }}
+  {% else %}
+  <i class="fas fa-edit"></i>
+  Enter initial content
+  {% endif %}
+</a>
+{% else %}
+{% if blurb.content %}
+{{ blurb.content|safe }}
+<a href="{% url 'dt-content:blurb-update' blurb.id %}?location={{ request.path }}&next={{ request.path }}"
+  class="dt-content-blurb-update-link">
+  <i class="fas fa-edit"></i>
+  Edit content
+</a>
+{% else %}
+<a href="{% url 'dt-content:blurb-update' blurb.id %}?location={{ request.path }}&next={{ request.path }}"
+  class="dt-content-blurb-update-link">
+  <i class="fas fa-edit"></i>
+  Enter initial content</strong>
+</a>
+{% endif %}
+{% endif %}
+{% else %}
+{% if blurb.content %}
+{% if blurb.plain_text %}
+{{ blurb.content|linebreaksbr }}
+{% else %}
+{{ blurb.content|safe }}
+{% endif %}
+{% else %}
+-
+{% endif %}
+{% endif %}

@@ -18,7 +18,7 @@
   {% endif %}
 
   <div class="row">
-    {% for section in content_section_list%}
+    {% for section in content_section_list.all %}
     <div class="col-12">
       <a href="{% url 'dt-content:content-section-update' section.id %}" class="text-decoration-none d-block">
         <div class="card d-flex flex-row mb-3 align-items-center">

@@ -14,3 +14,7 @@
 .header-label {
   color: #444;
 }
+
+.django-ckeditor-widget {
+  display: block !important;
+}

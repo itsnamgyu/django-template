@@ -45,6 +45,8 @@ urlpatterns = [
         ContentBlockDeleteView.as_view(),
         name="content-block-delete",
     ),
+    path("blurbs/", BlurbListView.as_view(), name="blurb-list"),
+    path("blurbs/update/<slug:slug>/", BlurbUpdateView.as_view(), name="blurb-update"),
     path(
         "rich-text-blocks/update/<slug:slug>/",
         RichTextBlockUpdateView.as_view(),
@@ -59,6 +61,7 @@ urlpatterns = [
     path(
         "example/section/", ExampleStaticSectionView.as_view(), name="example-section"
     ),
+    path("example/blurb/", ExampleBlurbView.as_view(), name="example-blurb"),
     path(
         "example/site_test/index/",
         ExampleSiteIndexView.as_view(),

@@ -297,5 +297,43 @@ def update_content_block_subclasses():
         content_block_classes[klass.block_type_key] = klass
 
 
+class Blurb(models.Model):
+    identifier = models.CharField(max_length=256, unique=True)
+    # A null value indicates that the content has not been set.
+    # An empty value would indicate that the blurb is intentionally empty.
+    content = RichTextUploadingField(blank=True, null=True, config_name="blurb")
+    plain_text = models.BooleanField(null=False, default=False, editable=False)
+    last_known_location = models.CharField(max_length=200, null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["identifier"]),
+            models.Index(fields=["last_known_location", "identifier"]),
+        ]
+
+    def empty(self):
+        return self.content == ""
+
+    @property
+    def html_id(self):
+        return "dt-content-blurb-{}".format(self.identifier)
+
+    @property
+    def href(self):
+        if self.last_known_location:
+            return "{}#{}".format(self.last_known_location, self.html_id)
+        else:
+            return ""
+
+    @property
+    def template_name(self):
+        return "dt_content/content/blurb.html"
+
+    def __str__(self):
+        if self.last_known_location:
+            return "{} ({})".format(self.identifier, self.last_known_location)
+        return self.identifier
+
+
 content_block_classes = None
 update_content_block_subclasses()
