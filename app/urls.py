@@ -18,8 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls.static import static
 
-from app.settings import MODERN_EMAIL_ENABLED, STRIPE_ENABLED
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("example.urls")),

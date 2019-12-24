@@ -7,7 +7,6 @@ Take a look, it's frickin brilliant.
 
 import os
 
-from django.core.exceptions import ImproperlyConfigured
 from django.core.checks import Error, register
 
 missing_required_envs = []

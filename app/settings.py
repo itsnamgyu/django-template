@@ -7,17 +7,16 @@ Extended by Namgyu Ho as a custom django project template at
 github.com/itsnamgyu/django-template
 """
 
-import os
 import logging
+import os
 
-from .env_loader import require_env, fetch_env
+from .env_loader import fetch_env, require_env
 from .logging_settings import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Variable to differentiate between development, staging, production etc.
-# Consider changing <APP> to the name of your project. You MUST apply the
-# same changes in wsgi.py
+# TODO: change APP to your own prefix (must apply same prefix in `wsgi.py`)
 DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 
 if DJANGO_ENV == "DEV":
@@ -25,7 +24,8 @@ if DJANGO_ENV == "DEV":
     ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = False
-    ALLOWED_HOSTS = ["*"]  # change this for your real project
+    # TODO: change this (don't forget `www`)
+    ALLOWED_HOSTS = ["*"]
 
 SECRET_KEY = require_env("SECRET_KEY")
 
@@ -160,9 +160,7 @@ USE_TZ = True
 # Static files
 STATIC_URL = "/static/"
 if DEBUG:
-    static_root = fetch_env("STATIC_ROOT")
-    if static_root:
-        STATIC_ROOT = static_root
+    STATIC_ROOT = fetch_env("STATIC_ROOT", default=None)
 else:
     STATIC_ROOT = require_env("STATIC_ROOT")
     STATICFILES_STORAGE = "app.storage.LooseManifestStaticFilesStorage"
@@ -170,10 +168,8 @@ else:
 # Media files
 MEDIA_URL = "/media/"
 if DEBUG:
-    media_root = fetch_env("MEDIA_ROOT")
-    if media_root:
-        MEDIA_ROOT = media_root
-    else:
+    MEDIA_ROOT = fetch_env("MEDIA_ROOT", default=None)
+    if MEDIA_ROOT is None:
         MEDIA_ROOT = os.path.join(BASE_DIR, "media")
         logging.info("Using default media root {}".format(MEDIA_ROOT))
 else:
@@ -274,17 +270,19 @@ if SES_ENABLED:
 
 if MODERN_EMAIL_ENABLED:
     MODERN_EMAIL_STATIC_HOST = require_env("STATIC_HOST")
-    MODERN_EMAIL_LOGO_IMAGE = "example/logo.png"  # TODO change this
     MODERN_EMAIL_CUSTOM_TEMPLATE = None
-    MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"  # TODO change this
-    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"  # TODO change this
-    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"  # TODO change this
-    MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"  # TODO change this
-    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"  # TODO change this
+    # TODO: change these values
+    MODERN_EMAIL_LOGO_IMAGE = "example/logo.png"
+    MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"
+    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"
+    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"
+    MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"
+    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"
 
 if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_STATIC_HOST = require_env("STATIC_HOST")
     STRIPE_PUBLIC_KEY = require_env("STRIPE_PUBLIC_KEY")
     STRIPE_SECRET_KEY = require_env("STRIPE_SECRET_KEY")
     STRIPE_WEBHOOK_SIGNING_SECRET = require_env("STRIPE_WEBHOOK_SIGNING_SECRET")
+    # TODO: change this value
     STRIPE_SUPPORT_EMAIL = "support@gyu.io"
