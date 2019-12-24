@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
-    "debug_toolbar",
     "base",
     # Carousel
     "versatileimagefield",
@@ -79,6 +78,7 @@ DT_CONTENT_ENABLED = fetch_env("DT_CONTENT_ENABLED", "FALSE").upper() == "TRUE"
 if DEBUG:
     # Live reload for development
     INSTALLED_APPS.insert(0, "livesync")
+    INSTALLED_APPS.append("debug_toolbar")
 if MODERN_EMAIL_ENABLED:
     INSTALLED_APPS.append("modern_email")
 if STRIPE_ENABLED:
