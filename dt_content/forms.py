@@ -1,6 +1,7 @@
-from ckeditor_uploader.fields import RichTextUploadingFormField
 from django import forms
+from django_summernote.widgets import SummernoteInplaceWidget
 
+from .fields import SummernoteFormField
 from .models import *
 
 
@@ -46,7 +47,7 @@ class BlurbForm(forms.ModelForm):
                 widget=forms.Textarea(attrs=dict(rows=3))
             )
         else:
-            self.fields["content"] = RichTextUploadingFormField()
+            self.fields["content"] = SummernoteFormField()
 
     class Meta:
         model = Blurb

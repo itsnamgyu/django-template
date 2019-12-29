@@ -1,6 +1,5 @@
 from abc import abstractmethod
 
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.apps import apps
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -9,6 +8,8 @@ from django.urls import reverse
 from django.utils.decorators import classproperty
 from django.utils.text import camel_case_to_spaces
 from model_utils.managers import InheritanceManager
+
+from .fields import SummernoteField
 
 
 class Menu(models.Model):
@@ -251,7 +252,7 @@ class RichTextBlock(ContentBlock):
     base = models.OneToOneField(
         ContentBlock, on_delete=models.CASCADE, parent_link=True
     )
-    content = RichTextUploadingField(default="", blank=True)
+    content = SummernoteField(default="", blank=True)
 
     @property
     def child_template_name(self):
@@ -301,7 +302,7 @@ class Blurb(models.Model):
     identifier = models.CharField(max_length=256, unique=True)
     # A null value indicates that the content has not been set.
     # An empty value would indicate that the blurb is intentionally empty.
-    content = RichTextUploadingField(blank=True, null=True, config_name="blurb")
+    content = SummernoteField(blank=True, null=True)
     plain_text = models.BooleanField(null=False, default=False, editable=False)
     last_known_location = models.CharField(max_length=200, null=True)
 
