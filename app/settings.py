@@ -62,9 +62,6 @@ INSTALLED_APPS = [
     "carousel",
     # Admin link
     "admin_link",
-    # dt-content
-    "ckeditor",
-    "ckeditor_uploader",
     # Example
     "example",
 ]
@@ -87,6 +84,9 @@ if DT_STRIPE_ENABLED:
     INSTALLED_APPS.append("dt_stripe")
 if DT_CONTENT_ENABLED:
     INSTALLED_APPS.append("dt_content")
+    INSTALLED_APPS.append("django_summernote")
+    X_FRAME_OPTIONS = "SAMEORIGIN"
+    SUMMERNOTE_THEME = "bs4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -178,50 +178,11 @@ else:
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
-# Dt Content
-CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
-CKEDITOR_CONFIGS = {
-    "default": {
-        "toolbar": "Default",
-        "toolbar_Default": [
-            ["Format"],
-            ["Bold", "Italic", "Underline"],
-            [
-                "NumberedList",
-                "BulletedList",
-                "-",
-                "Outdent",
-                "Indent",
-                "-",
-                "JustifyLeft",
-                "JustifyCenter",
-                "JustifyRight",
-                "JustifyBlock",
-            ],
-            ["Link", "Unlink"],
-            ["Table", "Image"],
-        ],
-    },
-    "blurb": {
-        "toolbar": "Custom",
-        "toolbar_Custom": [
-            ["Format"],
-            ["Bold", "Italic", "Underline"],
-            [
-                "NumberedList",
-                "BulletedList",
-                "-",
-                "Outdent",
-                "Indent",
-                "-",
-                "JustifyLeft",
-                "JustifyCenter",
-                "JustifyRight",
-                "JustifyBlock",
-            ],
-            ["Link", "Unlink"],
-        ],
-    },
+# Summernote
+
+SUMMERNOTE_CONFIG = {
+    "iframe": False,
+    "summernote": {"airMode": False, "width": "100%", "height": "640px"},
 }
 
 # Django Allauth

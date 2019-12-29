@@ -14,7 +14,6 @@ django-ses
 stripe
 # Carousel
 django-versatileimagefield
-# Blurb
-django-ckeditor
 # Dt Content
 django-model-utils
+django-summernote
