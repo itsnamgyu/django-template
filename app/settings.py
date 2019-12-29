@@ -183,6 +183,18 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 SUMMERNOTE_CONFIG = {
     "iframe": False,
     "summernote": {"airMode": False, "width": "100%", "height": "640px"},
+    "toolbar": [
+        ["edit", ["undo", "redo"]],
+        ["style", ["style"]],
+        [
+            "font",
+            ["bold", "underline", "strikethrough", "superscript", "subscript", "clear"],
+        ],
+        ["para", ["ul", "ol", "paragraph"]],
+        ["table", ["table"]],
+        ["insert", ["link", "picture", "video", "hr"]],
+        ["view", ["fullscreen", "codeview", "help"]],
+    ],
 }
 
 # Django Allauth
