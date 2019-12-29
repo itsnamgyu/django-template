@@ -23,9 +23,11 @@
     <div class="col-12">
       <div class="card d-flex flex-row align-items-center mb-3 ">
         <a href="{% url 'dt-content:blurb-update' blurb.id %}" class="text-decoration-none">
-          <h4 class="m-0 mr-3">{{ blurb.identifier}}</h4>
+          <h4 class="m-0 mr-3">{{ blurb.display_name }}</h4>
         </a>
+        {% if blurb.last_known_location %}
         <p class="m-0 mr-3">{{ blurb.last_known_location }} </p>
+        {% endif %}
         <a href="{{ blurb.href }}" class="ml-auto btn btn-outline-danger">
           View on Page
         </a>

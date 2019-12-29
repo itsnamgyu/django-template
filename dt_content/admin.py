@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 from django.utils.html import strip_tags
 
@@ -40,11 +41,21 @@ class BlurbFilledFilter(admin.SimpleListFilter):
             return queryset.filter(content__isnull=True)
 
 
+class AdminBlurbForm(forms.ModelForm):
+    class Meta:
+        model = Blurb
+        fields = "__all__"
+        fields = ["identifier", "label", "content"]
+
+        widgets = {"label": forms.TextInput()}
+
+
 @admin.register(Blurb)
 class BlurbAdmin(admin.ModelAdmin):
-    list_display = ("identifier", "preview", "filled")
+    list_display = ("display_name", "identifier", "preview", "filled")
     list_filter = (BlurbFilledFilter,)
     ordering = ("identifier",)
+    form = AdminBlurbForm
 
     def filled(self, blurb):
         return blurb.content is not None

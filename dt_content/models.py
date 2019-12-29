@@ -299,12 +299,15 @@ def update_content_block_subclasses():
 
 
 class Blurb(models.Model):
-    identifier = models.CharField(max_length=256, unique=True)
+    # Identifiers are primarily for the template-embedded blurb use case,
+    # using the `blurb` template tag.
+    identifier = models.CharField(max_length=256, unique=True, null=True, blank=True)
+    label = models.TextField(null=True, blank=True)
     # A null value indicates that the content has not been set.
     # An empty value would indicate that the blurb is intentionally empty.
-    content = SummernoteField(blank=True, null=True)
+    content = SummernoteField(null=True, blank=True)
     plain_text = models.BooleanField(null=False, default=False, editable=False)
-    last_known_location = models.CharField(max_length=200, null=True)
+    last_known_location = models.CharField(max_length=200, null=True, blank=True)
 
     class Meta:
         indexes = [
@@ -314,6 +317,14 @@ class Blurb(models.Model):
 
     def empty(self):
         return self.content == ""
+
+    @property
+    def display_name(self):
+        if self.label:
+            return self.label
+        if self.identifier:
+            return self.identifier
+        return "Unnamed Blurb ({})".format(self.id)
 
     @property
     def html_id(self):
@@ -332,8 +343,8 @@ class Blurb(models.Model):
 
     def __str__(self):
         if self.last_known_location:
-            return "{} ({})".format(self.identifier, self.last_known_location)
-        return self.identifier
+            return "{} ({})".format(self.display_name, self.last_known_location)
+        return self.display_name
 
 
 content_block_classes = None

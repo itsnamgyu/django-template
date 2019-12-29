@@ -22,7 +22,7 @@ def blurb(context, identifier, plain_text=False):
             blurb.save()
             logging.warning(
                 "Auto-correcting blurb type of {} to plain_text={}".format(
-                    blurb.identifier, plain_text
+                    blurb.display_name, plain_text
                 )
             )
     except ObjectDoesNotExist:
