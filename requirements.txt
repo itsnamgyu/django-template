@@ -10,6 +10,8 @@ django-debug-toolbar
 django-livesync
 # Amazon SES (Email)
 django-ses
+# Sendgrid (Email)
+django-sendgrid-v5
 # Stripe
 stripe
 # Carousel
