@@ -10,6 +10,8 @@ github.com/itsnamgyu/django-template
 import logging
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+
 from .env_loader import fetch_env, require_env
 from .logging_settings import *
 
@@ -67,6 +69,10 @@ INSTALLED_APPS = [
 ]
 
 SES_ENABLED = fetch_env("SES_ENABLED", "FALSE").upper() == "TRUE"
+SENDGRID_ENABLED = fetch_env("SENDGRID_ENABLED", "FALSE").upper() == "TRUE"
+SIMPLE_SENDGRID_ENABLED = (
+    fetch_env("SIMPLE_SENDGRID_ENABLED", "FALSE").upper() == "TRUE"
+)
 STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_CONTENT_ENABLED = fetch_env("DT_CONTENT_ENABLED", "FALSE").upper() == "TRUE"
@@ -77,6 +83,8 @@ if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
 if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
+if SIMPLE_SENDGRID_ENABLED:
+    INSTALLED_APPS.append("simple_sendgrid")
 if DT_STRIPE_ENABLED:
     INSTALLED_APPS.append("dt_stripe")
 if DT_CONTENT_ENABLED:
@@ -233,10 +241,23 @@ if SES_ENABLED:
     # default region for django_ses is us-east-1
     # for django-template, we set the default to us-west-2 (Oregon)
     EMAIL_BACKEND = "django_ses.SESBackend"
+    logging.info("Using EMAIL_BACKEND: {}".format(EMAIL_BACKEND))
     AWS_ACCESS_KEY_ID = require_env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = require_env("AWS_SECRET_ACCESS_KEY")
     AWS_SES_REGION_NAME = fetch_env("AWS_SES_REGION_NAME", "us-west-2")
     AWS_SES_REGION_ENDPOINT = "email.{}.amazonaws.com".format(AWS_SES_REGION_NAME)
+
+if SENDGRID_ENABLED:
+    EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+    logging.info("Using EMAIL_BACKEND: {}".format(EMAIL_BACKEND))
+    SENDGRID_API_KEY = require_env("SENDGRID_API_KEY")
+
+if SIMPLE_SENDGRID_ENABLED:
+    SENDGRID_TEMPLATE_ID = require_env("SENDGRID_TEMPLATE_ID")
+    SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
+if [SES_ENABLED, SENDGRID_ENABLED].count(True) > 1:
+    raise ImproperlyConfigured("Multiple email integrations enabled.")
 
 if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_STATIC_HOST = require_env("STATIC_HOST")
