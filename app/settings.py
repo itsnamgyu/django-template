@@ -21,15 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # TODO: change APP to your own prefix (must apply same prefix in `wsgi.py`)
 DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 
-# TODO: change this
-DOMAIN = require_env("DOMAIN")
+SITE_DOMAIN = require_env("SITE_DOMAIN")
+SITE_NAME = require_env("SITE_NAME")
 
 if DJANGO_ENV == "DEV":
     DEBUG = True
     ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = False
-    ALLOWED_HOSTS = ["www." + DOMAIN, DOMAIN]
+    ALLOWED_HOSTS = ["www." + SITE_DOMAIN, SITE_DOMAIN]
 
 SECRET_KEY = require_env("SECRET_KEY")
 
@@ -215,14 +215,16 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_LOGOUT_ON_GET = True
 
-SERVER_EMAIL = "admin@" + DOMAIN
-DEFAULT_FROM_EMAIL = "no-reply@" + DOMAIN
+ACCOUNT_EMAIL_VERIFICATION = fetch_env("ACCOUNT_EMAIL_VERIFICATION", "none")
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
+
+SERVER_EMAIL = '"{} Administration" <admin@{}'.format(SITE_NAME, SITE_DOMAIN)
+DEFAULT_FROM_EMAIL = '"{}" <no-reply@{}>'.format(SITE_NAME, SITE_DOMAIN)
 
 SITE_ID = 1
 
@@ -269,4 +271,4 @@ if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_SECRET_KEY = require_env("STRIPE_SECRET_KEY")
     STRIPE_WEBHOOK_SIGNING_SECRET = require_env("STRIPE_WEBHOOK_SIGNING_SECRET")
     # TODO: change this value
-    STRIPE_SUPPORT_EMAIL = "support@gyu.io"
+    STRIPE_SUPPORT_EMAIL = "support@" + SITE_DOMAIN
