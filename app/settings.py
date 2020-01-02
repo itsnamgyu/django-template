@@ -21,13 +21,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # TODO: change APP to your own prefix (must apply same prefix in `wsgi.py`)
 DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 
+# TODO: change this
+DOMAIN = require_env("DOMAIN")
+
 if DJANGO_ENV == "DEV":
     DEBUG = True
     ALLOWED_HOSTS = ["*"]
 else:
     DEBUG = False
-    # TODO: change this (don't forget `www`)
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = ["www." + DOMAIN, DOMAIN]
 
 SECRET_KEY = require_env("SECRET_KEY")
 
@@ -184,7 +186,6 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
 
 # Summernote
-
 SUMMERNOTE_CONFIG = {
     "iframe": False,
     "summernote": {"airMode": False, "width": "100%", "height": "640px"},
@@ -214,11 +215,14 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_LOGOUT_ON_GET = True
+
+SERVER_EMAIL = "admin@" + DOMAIN
+DEFAULT_FROM_EMAIL = "no-reply@" + DOMAIN
 
 SITE_ID = 1
 
