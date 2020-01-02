@@ -11,6 +11,7 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["dt_content"] = apps.is_installed("dt_content")
         context["dt_stripe"] = apps.is_installed("dt_stripe")
+        context["simple_sendgrid"] = apps.is_installed("simple_sendgrid")
         return context
 
 

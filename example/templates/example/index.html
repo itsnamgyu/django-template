@@ -36,6 +36,13 @@
   </a>
   {% endif %}
 
+  {% if simple_sendgrid %}
+  <h4 class="mt-4">simple-sendgrid</h4>
+  <a href="{% url 'simple-sendgrid:index' %}" class="btn btn-primary mt-2">
+    Admin Console
+  </a>
+  {% endif %}
+
   <h4 class="mt-4">Test out the admin_link app</h4>
   <p>These are admin links related to users.</p>
   {% if not request.user.is_superuser %}
