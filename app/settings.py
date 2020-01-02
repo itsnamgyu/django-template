@@ -67,7 +67,6 @@ INSTALLED_APPS = [
 ]
 
 SES_ENABLED = fetch_env("SES_ENABLED", "FALSE").upper() == "TRUE"
-MODERN_EMAIL_ENABLED = fetch_env("MODERN_EMAIL_ENABLED", "FALSE").upper() == "TRUE"
 STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_CONTENT_ENABLED = fetch_env("DT_CONTENT_ENABLED", "FALSE").upper() == "TRUE"
@@ -76,8 +75,6 @@ if DEBUG:
     # Live reload for development
     INSTALLED_APPS.insert(0, "livesync")
     INSTALLED_APPS.append("debug_toolbar")
-if MODERN_EMAIL_ENABLED:
-    INSTALLED_APPS.append("modern_email")
 if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
 if DT_STRIPE_ENABLED:
@@ -240,17 +237,6 @@ if SES_ENABLED:
     AWS_SECRET_ACCESS_KEY = require_env("AWS_SECRET_ACCESS_KEY")
     AWS_SES_REGION_NAME = fetch_env("AWS_SES_REGION_NAME", "us-west-2")
     AWS_SES_REGION_ENDPOINT = "email.{}.amazonaws.com".format(AWS_SES_REGION_NAME)
-
-if MODERN_EMAIL_ENABLED:
-    MODERN_EMAIL_STATIC_HOST = require_env("STATIC_HOST")
-    MODERN_EMAIL_CUSTOM_TEMPLATE = None
-    # TODO: change these values
-    MODERN_EMAIL_LOGO_IMAGE = "example/logo.png"
-    MODERN_EMAIL_SUPPORT_EMAIL = "support@namgyu.io"
-    MODERN_EMAIL_ADDRESS_LINE_1 = "Address Line 1"
-    MODERN_EMAIL_ADDRESS_LINE_2 = "Address Line 2"
-    MODERN_EMAIL_ORGANIZATION_NAME = "Django Template Org"
-    MODERN_EMAIL_COPYRIGHT_START_YEAR = "2019"
 
 if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_STATIC_HOST = require_env("STATIC_HOST")

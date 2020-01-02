@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -24,9 +24,6 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # path('', include('social_django.urls', namespace='social')),  # enable for social login
 ]
-
-if settings.MODERN_EMAIL_ENABLED:
-    urlpatterns.append(path("modern-email/", include("modern_email.urls")))
 
 if settings.STRIPE_ENABLED:
     urlpatterns.append(path("stripe/", include("django_stripe.urls")))
@@ -43,4 +40,3 @@ if settings.DEBUG:
 
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
     urlpatterns.extend([path("__debug__/", include(debug_toolbar.urls))])
-
