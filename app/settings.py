@@ -223,6 +223,9 @@ ACCOUNT_EMAIL_VERIFICATION = fetch_env("ACCOUNT_EMAIL_VERIFICATION", "none")
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
+if SIMPLE_SENDGRID_ENABLED:
+    ACCOUNT_ADAPTER = "simple_sendgrid.allauth.account_adapter.AccountAdapter"
+
 SERVER_EMAIL = '"{} Administration" <admin@{}'.format(SITE_NAME, SITE_DOMAIN)
 DEFAULT_FROM_EMAIL = '"{}" <no-reply@{}>'.format(SITE_NAME, SITE_DOMAIN)
 
