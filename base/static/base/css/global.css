@@ -74,14 +74,20 @@ h4:first-child {
   margin-top: 0;
 }
 
-p {
+p,
+li {
   font-size: 0.9375rem;
   font-weight: 500;
-  margin-bottom: 0.75rem;
   color: #666;
 }
+
 @media (min-width: 576px) {
-  p {
+  p,
+  li {
     font-size: 1.125rem;
   }
+}
+
+p {
+  margin-bottom: 0.75rem;
 }
