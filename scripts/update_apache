@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 
 ./scripts/update
-sudo apachectl -k graceful # restart server gracefully
+if [[ $? == '0' ]]; then
+	sudo apachectl -k graceful # restart server gracefully
+else
+	echo 'Django errors identified. Resolve issues to start apache server.'
+fi

@@ -7,3 +7,4 @@ sudo chown www-data db.sqlite3
 sudo chmod g+w db.sqlite3
 python manage.py migrate
 python manage.py collectstatic --noinput
+python manage.py check
