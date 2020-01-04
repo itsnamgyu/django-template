@@ -11,7 +11,7 @@ def main():
     # To change this, call read_dotenv(override=True).
     dotenv.read_dotenv()
 
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings.base")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

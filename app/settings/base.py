@@ -13,16 +13,16 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 
 from .env_loader import fetch_env, require_env
-from .logging_settings import *
+from .logging_config import *
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Variable to differentiate between development, staging, production etc.
-# TODO: change APP to your own prefix (must apply same prefix in `wsgi.py`)
+# TODO: change APP to your own prefix
 DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
+# TODO: change these
+SITE_DOMAIN = "mysite.com"
+SITE_NAME = "My Site"
 
-SITE_DOMAIN = require_env("SITE_DOMAIN")
-SITE_NAME = require_env("SITE_NAME")
 
 if DJANGO_ENV == "DEV":
     DEBUG = True
@@ -217,9 +217,6 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_LOGOUT_ON_GET = True
 
-ACCOUNT_EMAIL_VERIFICATION = fetch_env("ACCOUNT_EMAIL_VERIFICATION", "none")
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 if SIMPLE_SENDGRID_ENABLED:
@@ -274,3 +271,5 @@ if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_WEBHOOK_SIGNING_SECRET = require_env("STRIPE_WEBHOOK_SIGNING_SECRET")
     # TODO: change this value
     STRIPE_SUPPORT_EMAIL = "support@" + SITE_DOMAIN
+
+from .project import *
