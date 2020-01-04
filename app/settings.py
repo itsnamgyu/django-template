@@ -56,11 +56,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "base",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
-    "base",
     # Carousel
     "versatileimagefield",
     "carousel",
