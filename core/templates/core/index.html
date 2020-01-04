@@ -8,7 +8,7 @@
 
 {% block body %}
 <div class="container">
-  <h2 class="mt-5">This is an example app for django-template</h2>
+  <h2 class="mt-5">This is an placeholder app for django-template</h2>
   <p><i class="fas fa-rocket"></i> Good luck on your project!</p>
 
   {% bootstrap_messages as messages %}
@@ -16,11 +16,6 @@
   <h4 class="mt-4">Here are some Bootstrap messages</h4>
   <p>{{ messages }}</p>
   {% endif %}
-
-  <h4 class="mt-4">carousel</h4>
-  <a href="{% url 'example:carousel-test' %}">
-    <button class="btn btn-primary mt-2">Carousel Test</button>
-  </a>
 
   {% if dt_stripe %}
   <h4 class="mt-4">dt-stripe</h4>

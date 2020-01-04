@@ -69,8 +69,8 @@ INSTALLED_APPS = [
     "carousel",
     # Admin link
     "admin_link",
-    # Example
-    "example",
+    # Main project
+    "core",
 ]
 
 SES_ENABLED = fetch_env("SES_ENABLED", "FALSE").upper() == "TRUE"
