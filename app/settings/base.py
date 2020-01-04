@@ -61,6 +61,9 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
+    "dt_stripe",
+    "dt_content",
+    "django_summernote",
     # Carousel
     "versatileimagefield",
     "carousel",
@@ -77,7 +80,6 @@ SIMPLE_SENDGRID_ENABLED = (
 )
 STRIPE_ENABLED = fetch_env("STRIPE_ENABLED", "FALSE").upper() == "TRUE"
 DT_STRIPE_ENABLED = fetch_env("DT_STRIPE_ENABLED", "FALSE").upper() == "TRUE"
-DT_CONTENT_ENABLED = fetch_env("DT_CONTENT_ENABLED", "FALSE").upper() == "TRUE"
 
 if DEBUG:
     # Live reload for development
@@ -87,13 +89,6 @@ if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
 if SIMPLE_SENDGRID_ENABLED:
     INSTALLED_APPS.append("simple_sendgrid")
-if DT_STRIPE_ENABLED:
-    INSTALLED_APPS.append("dt_stripe")
-if DT_CONTENT_ENABLED:
-    INSTALLED_APPS.append("dt_content")
-    INSTALLED_APPS.append("django_summernote")
-    X_FRAME_OPTIONS = "SAMEORIGIN"
-    SUMMERNOTE_THEME = "bs4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -200,6 +195,8 @@ SUMMERNOTE_CONFIG = {
         ["view", ["fullscreen", "codeview", "help"]],
     ],
 }
+SUMMERNOTE_THEME = "bs4"
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Django Allauth
 """
