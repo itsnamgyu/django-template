@@ -166,6 +166,7 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 if DEBUG:
     STATIC_ROOT = fetch_env("STATIC_ROOT", default=None)
 else:
@@ -175,10 +176,7 @@ else:
 # Media files
 MEDIA_URL = "/media/"
 if DEBUG:
-    MEDIA_ROOT = fetch_env("MEDIA_ROOT", default=None)
-    if MEDIA_ROOT is None:
-        MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-        logging.info("Using default media root {}".format(MEDIA_ROOT))
+    MEDIA_ROOT = fetch_env("MEDIA_ROOT", default="media")
 else:
     MEDIA_ROOT = require_env("MEDIA_ROOT")
 
