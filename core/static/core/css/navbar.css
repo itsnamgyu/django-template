@@ -1,0 +1,57 @@
+.navbar {
+  background: #000d;
+  padding: 0.75rem 1.25rem;
+}
+
+.nav-logo {
+  height: 2.5rem;
+}
+
+.nav-title {
+  font-weight: 700;
+  font-size: 0.9375rem !important;
+}
+
+.nav-item {
+  font-size: 0.9375rem;
+}
+
+.navbar-nav {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 350px) {
+  .nav-logo {
+    height: 2.5rem;
+  }
+
+  .nav-title {
+    font-size: 1rem !important;
+  }
+
+  .nav-item {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-logo {
+    height: 3rem;
+  }
+
+  .nav-title {
+    font-size: 1.25rem !important;
+  }
+
+  .nav-item {
+    font-size: 1rem;
+  }
+
+  .navbar-nav {
+    margin-top: 0;
+  }
+}
+
+.navbar-toggler {
+  border: none;
+}
