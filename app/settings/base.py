@@ -20,8 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # TODO: change APP to your own prefix
 DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
 # TODO: change these
-SITE_DOMAIN = "mysite.com"
-SITE_NAME = "My Site"
+SITE_DOMAIN = fetch_env("SITE_DOMAIN", default="mysite.com")
+SITE_NAME = fetch_env("SITE_NAME", default="My Site")
 
 
 if DJANGO_ENV == "DEV":
