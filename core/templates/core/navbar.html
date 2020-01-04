@@ -26,13 +26,13 @@
         {% if dt_content_preview_mode %}
         <li class="nav-item">
           <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}" class="nav-link">
-            Exit Preview Mode
+            Exit Preview
           </a>
         </li>
         {% else %}
         <li class="nav-item">
           <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}" class="nav-link">
-            Enter Preview Mode
+            See Preview
           </a>
         </li>
         <li class="nav-item">
