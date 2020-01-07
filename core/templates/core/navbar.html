@@ -5,6 +5,19 @@
     <div class="container">
       <div class="d-flex justify-content-end">
         {% if request.user.is_authenticated %}
+        {% if request.user.is_staff %}
+        {% if dt_content_preview_mode %}
+        <a class="btn navbar-top-button"
+          href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}">
+          EXIT PREVIEW MODE
+        </a>
+        {% else %}
+        <a class="btn navbar-top-button"
+          href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}">
+          ENTER PREVIEW MODE
+        </a>
+        {% endif %}
+        {% endif %}
         <a class="btn navbar-top-button" href="{% url 'account_logout' %}">SIGN OUT</a>
         {% else %}
         <a class="btn navbar-top-button" href="{% url 'account_login' %}">LOG IN</a>
@@ -36,18 +49,7 @@
           {% endif %}
           {% endfor %}
           {% if request.user.is_staff %}
-          {% if dt_content_preview_mode %}
-          <li class="nav-item">
-            <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=false&next={{ request.path }}" class="nav-link">
-              Exit Preview
-            </a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a href="{% url 'dt-content:toggle-preview-mode' %}?mode=true&next={{ request.path }}" class="nav-link">
-              See Preview
-            </a>
-          </li>
+          {% if not dt_content_preview_mode %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'dt-content:menu-create' %}?next={{ request.path }}">
               <i class="fas fa-cog"></i> Add Menu
