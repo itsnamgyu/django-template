@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "bootstrap4",
-    "dt_stripe",
     "dt_content",
     "django_summernote",
     # Carousel
@@ -82,6 +81,8 @@ if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
 if STRIPE_ENABLED:
     INSTALLED_APPS.append("django_stripe")
+if DT_STRIPE_ENABLED:
+    INSTALLED_APPS.append("dt_stripe")
 if SIMPLE_SENDGRID_ENABLED:
     INSTALLED_APPS.append("simple_sendgrid")
 
