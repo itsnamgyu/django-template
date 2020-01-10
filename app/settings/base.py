@@ -17,12 +17,7 @@ from .logging_config import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# TODO: change APP to your own prefix
-DJANGO_ENV = fetch_env("DJANGO_APP_ENV", default="DEV")
-# TODO: change these
-SITE_DOMAIN = fetch_env("SITE_DOMAIN", default="mysite.com")
-SITE_NAME = fetch_env("SITE_NAME", default="My Site")
-
+from .project import DJANGO_ENV, SITE_DOMAIN, SITE_NAME, SUPPORT_EMAIL
 
 if DJANGO_ENV == "DEV":
     DEBUG = True
@@ -267,6 +262,6 @@ if DT_STRIPE_ENABLED or STRIPE_ENABLED:
     STRIPE_SECRET_KEY = require_env("STRIPE_SECRET_KEY")
     STRIPE_WEBHOOK_SIGNING_SECRET = require_env("STRIPE_WEBHOOK_SIGNING_SECRET")
     # TODO: change this value
-    STRIPE_SUPPORT_EMAIL = "support@" + SITE_DOMAIN
+    STRIPE_SUPPORT_EMAIL = SUPPORT_EMAIL
 
 from .project import *
