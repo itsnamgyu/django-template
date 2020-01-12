@@ -3,12 +3,10 @@ from django.http import HttpResponseRedirect
 
 
 class ModelAdmin(admin.ModelAdmin):
-    """Use this ModelAdmin base class to enabled redirect-backs for admin
-    links. When you use an admin link to change a model registered to the
-    Django admin using this class, you will be automatically redirected back
-    to the original page, containing the admin link
+    """Use this ModelAdmin to enable URL redirects for admin screens.
 
-    TODO improve this docstring.
+    E.g.
+    <a href="{% url 'myapp_mymodel_add' %}?admin_link_redirect={{ path }}">
     """
 
     def _response_post_save(self, request, obj):
