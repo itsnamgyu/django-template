@@ -183,7 +183,15 @@ SUMMERNOTE_CONFIG = {
         ["style", ["style"]],
         [
             "font",
-            ["bold", "underline", "strikethrough", "superscript", "subscript", "clear"],
+            [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "superscript",
+                "subscript",
+                "clear",
+            ],
         ],
         ["para", ["ul", "ol", "paragraph"]],
         ["table", ["table"]],
