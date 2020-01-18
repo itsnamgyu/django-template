@@ -183,11 +183,11 @@ class ContentBlock(models.Model):
     @property
     def console_list_url(self):
         if self.section:
-            try:
+            menu = self.section.menu
+            if menu:
                 # menu-bound section
-                menu = self.section.menu
-                return menu.update_url
-            except Menu.DoesNotExist as e:
+                menu.update_url
+            else:
                 # static section
                 return reverse(
                     "dt-content:content-section-update", args=[self.section.id]
