@@ -14,7 +14,7 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def blurb(context, identifier, plain_text=False):
-    # identifier should be in the form of '<page>:<name>'
+    # identifier should be in the form of '.../.../...'
     try:
         blurb = Blurb.objects.all().get(identifier=identifier)
         if blurb.plain_text != plain_text:
