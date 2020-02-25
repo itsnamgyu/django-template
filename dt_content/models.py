@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.utils.decorators import classproperty
 from django.utils.text import camel_case_to_spaces
 from model_utils.managers import InheritanceManager
+from versatileimagefield.fields import PPOIField, VersatileImageField
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from .fields import SummernoteField
 
@@ -287,17 +289,6 @@ class CarouselBlock(ContentBlock):
         raise NotImplementedError()
 
 
-def update_content_block_subclasses():
-    """
-    Call this after you have defined additional ContentBlock subclasses
-    to include them in `content_block_subclasses`
-    """
-    global content_block_classes
-    content_block_classes = dict()
-    for klass in ContentBlock.__subclasses__():
-        content_block_classes[klass.block_type_key] = klass
-
-
 class Blurb(models.Model):
     # Identifiers are primarily for the template-embedded blurb use case,
     # using the `blurb` template tag.
@@ -328,7 +319,7 @@ class Blurb(models.Model):
 
     @property
     def html_id(self):
-        return "dt-content-blurb-{}".format(self.identifier)
+        return "dt-content-blurb-{}".format(self.id)
 
     @property
     def href(self):
@@ -345,6 +336,83 @@ class Blurb(models.Model):
         if self.last_known_location:
             return "{} ({})".format(self.display_name, self.last_known_location)
         return self.display_name
+
+
+class ImageBlurb(models.Model):
+    # Identifiers are primarily for the template-embedded use case,
+    # using the `image_blurb` template tag.
+    identifier = models.CharField(max_length=256, unique=True, null=True, blank=True)
+    label = models.TextField(null=True, blank=True)
+    # A null value indicates that the content has not been set.
+    # An empty value would indicate that the blurb is intentionally empty.
+    image = VersatileImageField(
+        upload_to="image_blurbs", null=True, blank=True, default=None
+    )
+    placeholder = models.TextField(
+        help_text="Path to static placeholder image file",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    last_known_location = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["identifier"]),
+            models.Index(fields=["last_known_location", "identifier"]),
+        ]
+
+    @property
+    def display_name(self):
+        if self.label:
+            return self.label
+        if self.identifier:
+            return self.identifier
+        return "Unnamed Blurb ({})".format(self.id)
+
+    @property
+    def src(self):
+        print("IMAGE? {}".format(bool(self.image)).center(80, "#"))
+        if self.image:
+            return self.image.url
+        if self.placeholder:
+            return static(self.placeholder)
+        return None
+
+    @property
+    def html_id(self):
+        return "dt-content-image-blurb-{}".format(self.id)
+
+    @property
+    def update_url(self):
+        return reverse("dt-content:image-blurb-update", args=(self.id,))
+
+    @property
+    def update_link_template_name(self):
+        return "dt_content/content/image_blurb_update_link.html"
+
+    @property
+    def href(self):
+        if self.last_known_location:
+            return "{}#{}".format(self.last_known_location, self.html_id)
+        else:
+            return ""
+
+    def __str__(self):
+        if self.last_known_location:
+            return "{} ({})".format(self.display_name, self.last_known_location)
+        return self.display_name
+
+
+def update_content_block_subclasses():
+    """
+    Call this after you have defined additional ContentBlock subclasses
+    to include them in `content_block_subclasses`
+    """
+    global content_block_classes
+    content_block_classes = dict()
+    for klass in ContentBlock.__subclasses__():
+        content_block_classes[klass.block_type_key] = klass
 
 
 content_block_classes = None

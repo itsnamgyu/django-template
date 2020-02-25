@@ -52,3 +52,9 @@ class BlurbForm(forms.ModelForm):
     class Meta:
         model = Blurb
         fields = ["content"]
+
+
+class ImageBlurbForm(forms.ModelForm):
+    class Meta:
+        model = ImageBlurb
+        fields = ["image"]

@@ -3,6 +3,7 @@ import json
 from django.core.exceptions import SuspiciousOperation
 from django.shortcuts import redirect
 from django.views.generic import *
+from django.http import HttpResponseRedirect
 
 from ..forms import *
 from ..mixins import StaffMemberRequiredMixin
@@ -17,6 +18,7 @@ class IndexView(StaffMemberRequiredMixin, TemplateView):
         context["static_section_count"] = ContentSection.static_objects.count()
         context["static_block_count"] = ContentBlock.static_objects.count()
         context["blurb_count"] = Blurb.objects.count()
+        context["image_blurb_count"] = ImageBlurb.objects.count()
         return context
 
 
@@ -253,9 +255,50 @@ class BlurbUpdateView(StaffMemberRequiredMixin, UpdateView):
     context_object_name = "blurb"
     template_name = "dt_content/console/blurb_update.html"
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        # Update last known location (only when it has been updated)
+        next_url = self.request.GET.get("next", None)
+        if next_url:
+            self.object.last_known_location = next_url
+        self.object.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
         next_url = self.request.GET.get("next", None)
         url = next_url or reverse("dt-content:blurb-list")
+        return url + "?success=true"
+
+
+class ImageBlurbListView(StaffMemberRequiredMixin, ListView):
+    queryset = ImageBlurb.objects.order_by("last_known_location", "identifier")
+    context_object_name = "image_blurb_list"
+    template_name = "dt_content/console/image_blurb_list.html"
+
+
+class ImageBlurbUpdateView(StaffMemberRequiredMixin, UpdateView):
+    model = ImageBlurb
+    form_class = ImageBlurbForm
+    slug_field = "id"
+    context_object_name = "image_blurb"
+    template_name = "dt_content/console/image_blurb_update.html"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        # Update last known location (only when it has been updated)
+        next_url = self.request.GET.get("next", None)
+        if next_url:
+            self.object.last_known_location = next_url
+        self.object.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        next_url = self.request.GET.get("next", None)
+        url = next_url or reverse("dt-content:image-blurb-list")
         return url + "?success=true"
 
 

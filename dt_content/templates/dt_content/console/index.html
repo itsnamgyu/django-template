@@ -18,6 +18,9 @@
       <a href="{% url 'dt-content:blurb-list' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
         Blurbs: {{ blurb_count }}
       </a>
+      <a href="{% url 'dt-content:image-blurb-list' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
+        Image Blurbs: {{ image_blurb_count }}
+      </a>
     </div>
 
     <!-- EXAMPLES -->
@@ -33,6 +36,9 @@
       </a>
       <a href="{% url 'dt-content:example-blurb' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
         Blurb Example
+      </a>
+      <a href="{% url 'dt-content:example-image-blurb' %}" class="btn btn-light btn-block btn-lg text-left mb-2 px-4">
+        Image Blurb Example
       </a>
     </div>
   </div>

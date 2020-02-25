@@ -60,3 +60,8 @@
 .dt-content-blurb-inline-update-link {
   color: inherit;
 }
+
+.dt-content-image-blurb-update-link {
+  font-size: 0.875rem;
+  font-weight: 700;
+}

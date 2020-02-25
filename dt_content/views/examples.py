@@ -43,3 +43,12 @@ class ExampleBlurbView(StaffMemberRequiredMixin, PreviewModeMixin, TemplateView)
         context = super().get_context_data(**kwargs)
         context["dt_content_preview_mode"] = self.get_preview_mode()
         return context
+
+
+class ExampleImageBlurbView(StaffMemberRequiredMixin, PreviewModeMixin, TemplateView):
+    template_name = "dt_content/example/image_blurb.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["dt_content_preview_mode"] = self.get_preview_mode()
+        return context

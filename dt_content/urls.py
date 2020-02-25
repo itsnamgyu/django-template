@@ -47,6 +47,12 @@ urlpatterns = [
     ),
     path("blurbs/", BlurbListView.as_view(), name="blurb-list"),
     path("blurbs/update/<slug:slug>/", BlurbUpdateView.as_view(), name="blurb-update"),
+    path("image-blurbs/", ImageBlurbListView.as_view(), name="image-blurb-list"),
+    path(
+        "image-blurbs/update/<slug:slug>/",
+        ImageBlurbUpdateView.as_view(),
+        name="image-blurb-update",
+    ),
     path(
         "rich-text-blocks/update/<slug:slug>/",
         RichTextBlockUpdateView.as_view(),
@@ -62,6 +68,11 @@ urlpatterns = [
         "example/section/", ExampleStaticSectionView.as_view(), name="example-section"
     ),
     path("example/blurb/", ExampleBlurbView.as_view(), name="example-blurb"),
+    path(
+        "example/image-blurb/",
+        ExampleImageBlurbView.as_view(),
+        name="example-image-blurb",
+    ),
     path(
         "example/site_test/index/",
         ExampleSiteIndexView.as_view(),

@@ -9,6 +9,7 @@ admin.site.register(Menu)
 admin.site.register(ContentSection)
 admin.site.register(ContentBlock)
 admin.site.register(RichTextBlock)
+admin.site.register(ImageBlurb)
 
 
 class BlurbFilledFilter(admin.SimpleListFilter):
