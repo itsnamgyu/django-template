@@ -34,12 +34,13 @@ To ease the process of manually merging upstream changes from this base template
 
 1. Customize Django project settings by modifying `/app/settings/project.py`.
 2. Customize base templates and styles by modifying the placeholder files in `/static/` and `/templates/`. Refer to the `base` app on the usage of these files.
-3. Customize __deployment specific__ settings using `.env`. `.env` should not be checked into version control.
+3. Customize **deployment specific** settings using `.env`. `.env` should not be checked into version control.
 4. Feel free to completely modify or remove the `core` app. This is simply an example implementation.
 
 #### New Project Checklist
 
 - [ ] Update default site name and domain in `/app/settings/project.py`.
+- [ ] Update default values in `.env.example`.
 - [ ] Update copyright notice in `/templates/account/snippets/copyright.html`
 - [ ] Update head tags in `/templates/base/extra_head.html`
 - [ ] Update logo image in `/static/account/img/logo.png`
