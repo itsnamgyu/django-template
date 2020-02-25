@@ -372,7 +372,6 @@ class ImageBlurb(models.Model):
 
     @property
     def src(self):
-        print("IMAGE? {}".format(bool(self.image)).center(80, "#"))
         if self.image:
             return self.image.url
         if self.placeholder:
