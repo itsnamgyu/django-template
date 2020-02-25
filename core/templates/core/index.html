@@ -3,6 +3,7 @@
 {% load admin_link %}
 {% load static %}
 {% load dt_content %}
+{% load image_blurb %}
 
 {% block head %}
 <title>Django Template</title>
@@ -18,7 +19,8 @@
 {% include 'core/navbar.html' %}
 
 <div class="header header-lg">
-  <div class="header-background" style="background-image: url('{% static 'core/img/background.jpg' %}')">
+  {% image_blurb 'index/background' placeholder='core/img/background.jpg' as image_blurb %}
+  <div class="header-background" style="background-image: url('{{ image_blurb.src }}')">
   </div>
   <div class="header-tint"></div>
   <div class="header-content">
@@ -26,6 +28,10 @@
       <div class="hero-title">django-template</div>
     </div>
   </div>
+</div>
+
+<div class="container my-3">
+  {% include image_blurb.update_link_template_name %}
 </div>
 
 <div class="content">
