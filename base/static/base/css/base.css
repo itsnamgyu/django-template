@@ -91,3 +91,7 @@ li {
 p {
   margin-bottom: 0.75rem;
 }
+
+a:hover {
+  text-decoration: none;
+}
