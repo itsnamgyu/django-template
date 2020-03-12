@@ -10,7 +10,7 @@ from ..models import *
 from ..mixins import PreviewModeMixin
 
 
-class PageView(PreviewModeMixin, TemplateView):
+class PageMixin(PreviewModeMixin):
     """
     Examle usage:
 
@@ -56,8 +56,9 @@ class PageView(PreviewModeMixin, TemplateView):
             self.get_menu_base_url(), self.request.path, self.get_preview_mode()
         )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_page_context_data(self, **kwargs):
+        page_context = dict()
+
         current_menu = self.get_current_menu(self.request)
         nav_menu_list = self.get_nav_menu_list()
 
@@ -86,10 +87,30 @@ class PageView(PreviewModeMixin, TemplateView):
                         break
                 else:
                     logging.warning("Could not find current child menu in menu_list")
-            context["content_section"] = current_menu.get_content_section()
-            context["nav_menu"] = nav_menu
+            page_context["content_section"] = current_menu.get_content_section()
+            page_context["nav_menu"] = nav_menu
 
-        context["nav_menu_list"] = nav_menu_list
-        context["dt_content_preview_mode"] = self.get_preview_mode()
+        page_context["nav_menu_list"] = nav_menu_list
+        page_context["dt_content_preview_mode"] = self.get_preview_mode()
 
+        return page_context
+
+
+class PageView(PageMixin, TemplateView):
+    """
+    Examle usage:
+
+    URL path: /menus/<parent_menu_slug>/<child_menu_slug?>
+    URL pattern: /menus/<path:menu_path>
+    `menu_base_url`: "/menus"
+    `menu_path_kwarg`: "menu_path"
+
+    ## Optimization Notes
+    - Need to combine `get_current_menu` and `get_menu_list` for optimal performance.
+      These methods are called for **every** page load.
+    """
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_page_context_data())
         return context
