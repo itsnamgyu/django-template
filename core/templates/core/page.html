@@ -58,7 +58,8 @@
   <div class="container">
     <h3>Admin Options</h3>
     {% if not nav_menu.parent %}
-    <a href="{% url 'dt-content:submenu-create' %}?parent={{ nav_menu.id }}" class="submenu-link">
+    <a href="{% url 'dt-content:submenu-create' %}?parent={{ nav_menu.id }}&next={{ request.path}}"
+      class="submenu-link">
       <i class="fas fa-cog"> </i>
       Add Submenu
     </a>
