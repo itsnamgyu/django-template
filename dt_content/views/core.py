@@ -25,7 +25,6 @@ class PageMixin(PreviewModeMixin):
     """
 
     menu_base_url = "/"
-    context_menu_name = "menu"
     menu_path_kwarg = "menu_path"
 
     def get_menu_base_url(self):
