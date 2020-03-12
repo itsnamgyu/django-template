@@ -22,7 +22,7 @@
   <div class="header-content">
     <div class="container header-container">
       {% if nav_menu.parent %} {# Child #}
-      <div class="header-title d-flex flex-row">
+      <div class="header-title d-flex flex-row align-items-center">
         <a href="{{ nav_menu.parent.href }}" class="mr-3">{{ nav_menu.parent.title }}</a>
         <i class="fas fa-chevron-right mr-3"></i>
         <a href="{{ nav_menu.href }}" class="mr-3">{{ nav_menu.title }}</a>
