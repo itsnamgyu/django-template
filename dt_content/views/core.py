@@ -3,14 +3,14 @@ from typing import Tuple
 
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.views.generic.base import TemplateView
+from django.views.generic.base import ContextMixin, TemplateView
 
 from ..menu import get_nav_menu_list
-from ..models import *
 from ..mixins import PreviewModeMixin
+from ..models import *
 
 
-class PageMixin(PreviewModeMixin):
+class PageContextMixin(PreviewModeMixin, ContextMixin):
     """
     Examle usage:
 
@@ -94,8 +94,16 @@ class PageMixin(PreviewModeMixin):
 
         return page_context
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.get_page_context_data())
+        return context
 
-class PageView(PageMixin, TemplateView):
+
+PageMixin = PageContextMixin  # deprecated
+
+
+class PageView(PageContextMixin, TemplateView):
     """
     Examle usage:
 
@@ -108,8 +116,3 @@ class PageView(PageMixin, TemplateView):
     - Need to combine `get_current_menu` and `get_menu_list` for optimal performance.
       These methods are called for **every** page load.
     """
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(self.get_page_context_data())
-        return context
