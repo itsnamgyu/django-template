@@ -58,10 +58,10 @@ To ease the process of manually merging upstream changes from this base template
 
 #### Set Locale in Apache
 
-Do this to support non-ascii filename uploads. In `/etc/apache2/envvars`, replace the `LANG` variable with the following:
+Do this to support non-ascii filename uploads. In `/etc/apache2/envvars`, uncomment the following line:
 
 ```
-export LANG='en_US.UTF-8'
+. /etc/default/locale
 ```
 
 ## Contribution
