@@ -56,6 +56,14 @@ To ease the process of manually merging upstream changes from this base template
 ./script/deploy_apache --host=domain.com
 ```
 
+#### Set Locale in Apache
+
+Do this to support non-ascii filename uploads. In `/etc/apache2/envvars`, replace the `LANG` variable with the following:
+
+```
+export LANG='en_US.UTF-8'
+```
+
 ## Contribution
 
 #### Code formatting
